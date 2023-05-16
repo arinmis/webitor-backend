@@ -43,12 +43,10 @@ else
     app.UseHsts();
 }
 app.UseHttpsRedirection();
-
 app.UseRouting();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseSwaggerExtension();
 app.UseErrorHandlingMiddleware();
 app.UseHealthChecks("/health");
 
@@ -57,6 +55,15 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
+}
 
 Console.WriteLine("hererererer");
 
