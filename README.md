@@ -3,12 +3,17 @@
 
 ## Docker 
 
-- Run
+- Run For Development
 ```
-docker run --rm -p 5000:5000 -p 5001:5001  webitor/azure ENV ASPNETCORE_URLS=http://+:80
+docker run --rm  -p  5000:80  -e ASPNETCORE_ENVIRONMENT=Development webitor
+```
+
+- Run For Production
+```
+docker run --rm  -p  5000:80
 ```
 
 - Build
 ```
-docker build --rm -t webitor/azure:latest .
+sudo docker build -f Dockerfile -t webitor .
 ```

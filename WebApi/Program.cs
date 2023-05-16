@@ -60,16 +60,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
+        // TODO: fetch version from config file
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
     });
 }
 
-Console.WriteLine("hererererer");
-
 
 //Initialize Logger
-
 Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(app.Configuration)
                 .CreateLogger();
