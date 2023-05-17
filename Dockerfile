@@ -1,9 +1,9 @@
 # Base Image
-from mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 
 # Build Image
-from mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["/WebApi/WebApi.csproj", "WebApi/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
@@ -22,5 +22,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-EXPOSE 5000
+EXPOSE 8080
 ENTRYPOINT ["dotnet", "WebApi.dll"]
