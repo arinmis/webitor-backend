@@ -1,0 +1,60 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+
+
+steps:
+
+# set .net version
+- task: UseDotNet@2
+  inputs:
+    version: '6.0'
+    performMultiLevelLookup: true
+    includePreviewVersions: true # Required for preview versions
+
+# restore packages
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+    feedsToUse: config
+    nugetConfigPath: NuGet.config    # Relative to root of the repository
+    # externalFeedCredentials: <Name of the NuGet service connection>
+
+
+
+# build the project
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)' # Update this to match your need
+
+
+# publish and archive the built to deploy
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+# deploy built to Azure
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '502dc321-b60e-4003-8e33-d4947880d7a3' 
+    appType: webAppLinux
+    appName: 'webitorr'
+    package: $(Build.ArtifactStagingDirectory)/*.zip  
