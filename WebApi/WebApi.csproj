@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Authors>Mukesh Murugan</Authors>
-    <Company>codewithmukesh</Company>
-    <RepositoryUrl>https://github.com/iammukeshm/WebApi</RepositoryUrl>
+    <Authors>Mustafa Arinmis</Authors>
+    <Company>webitor</Company>
+    <RepositoryUrl>https://github.com/arinmis/webitor</RepositoryUrl>
     <RepositoryType>Public</RepositoryType>
     <PackageProjectUrl>https://www.codewithmukesh.com/project/aspnet-core-webapi-clean-architecture/</PackageProjectUrl>
-    <Version>1.1.0</Version>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
