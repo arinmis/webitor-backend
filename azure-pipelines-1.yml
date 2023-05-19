@@ -51,7 +51,7 @@ steps:
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 502dc321-b60e-4003-8e33-d4947880d7a3
-    appType: webAppLinux
+    appType: webApp
     appName: webitorr
     resourceGroupName: webitorr_group-88d6
     package: '$(Build.ArtifactStagingDirectory)/*.zip'
