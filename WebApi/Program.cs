@@ -23,7 +23,7 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 // Add services to the container.
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
-builder.Services.AddSwaggerExtension();
+// builder.Services.AddSwaggerExtension();
 builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
@@ -55,16 +55,13 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-if (app.Environment.IsDevelopment())
+// swagger configs
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        // TODO: fetch version from config file
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        options.RoutePrefix = string.Empty;
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 
 //Initialize Logger
