@@ -31,12 +31,11 @@ namespace Infrastructure
             }
             else
             {
+                var postgres = configuration.GetConnectionString("DefaultConnection");
                 services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(
-                   configuration.GetConnectionString("DefaultConnection"),
-                   b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                        options.UseNpgsql(postgres)
+                );
             }
-
 
 
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();

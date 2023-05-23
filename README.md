@@ -34,18 +34,3 @@ curl -X 'POST' \
   "confirmPassword": "Foo$ar1"
 }'
 ```
-
-
-
-curl -X 'POST' \
-  'https://webitor1.azurewebsites.net:8080/api/account/signup' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "firstName": "foo",
-  "lastName": "bar",
-  "email": "foo@example.com",
-  "userName": "foobar",
-  "password": "Foo$ar1",
-  "confirmPassword": "Foo$ar1"
-}'
