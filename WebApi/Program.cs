@@ -1,6 +1,7 @@
 using Core;
 using Core.Interfaces;
 using Infrastructure;
+using Infrastructure.Services;
 using Infrastructure.Models;
 using WebApi.Extensions;
 using WebApi.Services;
@@ -29,6 +30,7 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddSwaggerGen();
 
 //Build the application
