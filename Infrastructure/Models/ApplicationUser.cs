@@ -1,6 +1,7 @@
 ﻿using Core.DTOs.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using Core.Entities;
 
 namespace Infrastructure.Models
 {
@@ -13,5 +14,7 @@ namespace Infrastructure.Models
         {
             return this.RefreshTokens?.Find(x => x.Token == token) != null;
         }
+
+        public ICollection<File> Files;
     }
 }

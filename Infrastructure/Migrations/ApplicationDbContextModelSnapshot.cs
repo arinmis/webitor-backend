@@ -61,7 +61,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("RefreshToken");
                 });
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Entities.File", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Barcode")
+                    b.Property<string>("Content")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
@@ -78,24 +78,21 @@ namespace Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Path")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Rate")
-                        .HasColumnType("numeric(18,6)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.ApplicationUser", b =>
