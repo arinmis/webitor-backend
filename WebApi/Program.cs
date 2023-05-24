@@ -35,9 +35,8 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-builder.Services.AddScoped<ICreateFileCommandHandler, CreateFileCommandHandler>();
-builder.Services.AddScoped<IFileRepositoryAsync, FileRepositoryAsync>();
-builder.Services.AddScoped<IFileService, FileService>();
+
+
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });

@@ -1,39 +1,63 @@
-using System;
-using Core.DTOs.File;
-using Core.Interfaces;
+using Core.Features.Files.Commands.CreateFile;
+using Core.Features.Files.Commands.DeleteFileById;
+using Core.Features.Files.Commands.UpdateFile;
+using Core.Features.Files.Queries.GetAllFiles;
+using Core.Features.Files.Queries.GetFileById;
+using Core.Wrappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Core.Features.Files.Commands.CreateFile;
 
-namespace WebApi.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace WebApi.Controllers.v1
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class FileController : ControllerBase
+    [ApiVersion("1.0")]
+    public class FileController : BaseApiController
     {
-        private readonly ICreateFileCommandHandler _createFileCommandHandler;
-        public FileController(ICreateFileCommandHandler createFileCommandHandler)
+        // GET: api/<controller>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResponse<IEnumerable<GetAllFilesViewModel>>))]
+        public async Task<PagedResponse<IEnumerable<GetAllFilesViewModel>>> Get([FromQuery] GetAllFilesParameter filter)
         {
-            _createFileCommandHandler = createFileCommandHandler;
+            return await Mediator.Send(new GetAllFilesQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber, UserId = filter.UserId });
         }
 
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            return Ok(await Mediator.Send(new GetFileByIdQuery { Id = id }));
+        }
+
+        // POST api/<controller>
+        [HttpPost]
         [Authorize]
-        [HttpPost("create-file")]
-        public async Task<string> CreateFileAsync(CreateFileCommand request)
+        public async Task<IActionResult> Post(CreateFileCommand command)
         {
-            return  await _createFileCommandHandler.Handle(request);
+            return Ok(await Mediator.Send(command));
         }
 
-
-        private string GenerateIPAddress()
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put(int id, UpdateFileCommand command)
         {
-            if (Request.Headers.ContainsKey("X-Forwarded-For"))
-                return Request.Headers["X-Forwarded-For"];
-            else
-                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+            return Ok(await Mediator.Send(command));
         }
 
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await Mediator.Send(new DeleteFileByIdCommand { Id = id }));
+        }
     }
 }
