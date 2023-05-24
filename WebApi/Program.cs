@@ -1,6 +1,9 @@
 using Core;
+using Core.Features.Files.Commands.CreateFile;
 using Core.Interfaces;
+using Core.Interfaces.Repositories;
 using Infrastructure;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Infrastructure.Models;
 using WebApi.Extensions;
@@ -30,6 +33,8 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+builder.Services.AddScoped<ICreateFileCommandHandler, CreateFileCommandHandler>();
+builder.Services.AddScoped<IFileRepositoryAsync, FileRepositoryAsync>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddSwaggerGen();
 

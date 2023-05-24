@@ -1,10 +1,11 @@
+using System;
 using Core.DTOs.File;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-
+using Core.Features.Files.Commands.CreateFile;
 
 namespace WebApi.Controllers
 {
@@ -12,17 +13,17 @@ namespace WebApi.Controllers
     [ApiController]
     public class FileController : ControllerBase
     {
-        private readonly IFileService _fileService;
-        public FileController(IFileService fileService)
+        private readonly ICreateFileCommandHandler _createFileCommandHandler;
+        public FileController(ICreateFileCommandHandler createFileCommandHandler)
         {
-            _fileService = fileService;
+            _createFileCommandHandler = createFileCommandHandler;
         }
 
         [Authorize]
         [HttpPost("create-file")]
-        public async Task<IActionResult> CreateFileAsync(CreateFileRequest request)
+        public async Task<string> CreateFileAsync(CreateFileCommand request)
         {
-            return Ok(await _fileService.CreateFileAsync(request, GenerateIPAddress()));
+            return  await _createFileCommandHandler.Handle(request);
         }
 
 
