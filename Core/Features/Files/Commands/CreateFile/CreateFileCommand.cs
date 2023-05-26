@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace Core.Features.Files.Commands.CreateFile
 {
-    public partial class CreateFileCommand : IRequest<Response<int>>
+    public partial class CreateFileCommand : IRequest<Response<string>>
     {
-        public string UserId { get; set; }
         public string Path { get; set; }
         public string Content { get; set; }
     }
 
-    public class CreateFileCommandHandler : IRequestHandler<CreateFileCommand, Response<int>>
+    public class CreateFileCommandHandler : IRequestHandler<CreateFileCommand, Response<string>>
     {
         private readonly IFileRepositoryAsync _fileRepository;
         private readonly IMapper _mapper;
@@ -25,11 +24,11 @@ namespace Core.Features.Files.Commands.CreateFile
             _mapper = mapper;
         }
 
-        public async Task<Response<int>> Handle(CreateFileCommand request, CancellationToken cancellationToken)
+        public async Task<Response<string>> Handle(CreateFileCommand request, CancellationToken cancellationToken)
         {
             var file = _mapper.Map<File>(request);
             await _fileRepository.AddAsync(file);
-            return new Response<int>(file.Id);
+            return new Response<string> { Data = file.Path, Message = $"file created with path: {file.Path}" };
         }
     }
 }
