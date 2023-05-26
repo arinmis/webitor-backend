@@ -1,21 +1,16 @@
 # Webitor backend with .net 6
 
 
-## Docker 
+## Migrations 
 
-- Run For Development
+To add new migration, run those commands at the root of the repository 
 ```
-docker run --rm  -p  8080:80  -e ASPNETCORE_ENVIRONMENT=Development webitor
-```
-
-- Run For Production
-```
-docker run --rm  -p  8080:80
+dotnet ef migrations add <migration-name> --startup-project WebApi --project Infrastructure --context ApplicationDbContext -o WebApi/Migrations/
 ```
 
-- Build
+Apply migrations
 ```
-sudo docker build -f Dockerfile -t webitor .
+dotnet ef   database update --project Infrastructure --startup-project WebApi --context ApplicationDbContext
 ```
 
 
