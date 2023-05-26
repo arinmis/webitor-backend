@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebApi.Controllers.v1
+namespace WebApi.Controllers
 {
 
     [ApiVersion("1.0")]

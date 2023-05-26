@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebApi.Controllers
 {
+
+    // [ApiVersion("1.0")]
     [ApiController]
     [Route("api/[controller]")]
     public abstract class BaseApiController : ControllerBase
