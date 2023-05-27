@@ -19,15 +19,7 @@ namespace WebApi.Controllers.v1
     [Authorize]
     public class FileController : BaseApiController
     {
-        // // GET: api/<controller>
-        // [HttpGet]
-        // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResponse<IEnumerable<GetAllFilesViewModel>>))]
-        // public async Task<PagedResponse<IEnumerable<GetAllFilesViewModel>>> Get([FromQuery] GetAllFilesParameter filter)
-        // {
-        //     return await Mediator.Send(new GetAllFilesQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber, UserId = filter.UserId });
-        // }
 
-        // GET api/<controller>/5
         [HttpGet("{path}")]
         public async Task<IActionResult> GetFile(string path)
         {
@@ -51,16 +43,12 @@ namespace WebApi.Controllers.v1
             return Ok(await Mediator.Send(command));
         }
 
-        // // PUT api/<controller>/5
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Put(int id, UpdateFileCommand command)
-        // {
-        //     if (id != command.Id)
-        //     {
-        //         return BadRequest();
-        //     }
-        //     return Ok(await Mediator.Send(command));
-        // }
+        // PUT api/<controller>/5
+        [HttpPut("{path}")]
+        public async Task<IActionResult> Put(string path, UpdateFileCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
 
         // DELETE api/<controller>/5
         [HttpDelete("{path}")]

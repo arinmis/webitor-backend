@@ -11,10 +11,7 @@ namespace Core.Mappings
     {
         public GeneralProfile()
         {
-            CreateMap<Product, GetAllProductsViewModel>().ReverseMap();
-            CreateMap<CreateProductCommand, Product>();
-            CreateMap<GetAllProductsQuery, GetAllProductsParameter>();
-
+            CreateMap<CreateFileCommand, File>();
         }
     }
 }
