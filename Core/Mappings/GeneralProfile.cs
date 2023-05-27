@@ -15,9 +15,6 @@ namespace Core.Mappings
             CreateMap<CreateProductCommand, Product>();
             CreateMap<GetAllProductsQuery, GetAllProductsParameter>();
 
-            CreateMap<File, GetAllFilesViewModel>().ReverseMap();
-            CreateMap<CreateFileCommand, File>();
-            CreateMap<GetAllFilesQuery, GetAllFilesParameter>();
         }
     }
 }

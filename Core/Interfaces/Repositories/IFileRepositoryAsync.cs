@@ -8,7 +8,7 @@ namespace Core.Interfaces.Repositories
     {
 
         Task<File> GetFileByPathAsync(string path);
-        Task<IReadOnlyList<File>> getFilesByUserIdAsync(string userId);
+        Task<IReadOnlyList<File>> GetAllFilesAsync();
 
     }
 }

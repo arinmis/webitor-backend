@@ -28,10 +28,9 @@ namespace Infrastructure.Repositories
             return await Task.FromResult(file);
         }
 
-        public async Task<IReadOnlyList<File>> getFilesByUserIdAsync(string userId)
+        public async Task<IReadOnlyList<File>> GetAllFilesAsync()
         {
-            // var files_created = _file.Where(f => f.CreatedBy == _userId).ToList();
-            var files = _file.Where(f => f.CreatedBy == userId).ToList();
+            var files = _file.Where(f => f.CreatedBy == _userId).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));
         }
     }

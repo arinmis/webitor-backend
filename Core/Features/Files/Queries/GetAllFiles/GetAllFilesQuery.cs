@@ -1,35 +1,29 @@
-using AutoMapper;
-
+using Core.Exceptions;
 using Core.Interfaces.Repositories;
 using Core.Wrappers;
+using Core.Entities;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Core.Features.Files.Queries.GetAllFiles
 {
-    public class GetAllFilesQuery : IRequest<PagedResponse<IEnumerable<GetAllFilesViewModel>>>
-    {   public string UserId { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-    }
-    public class GetAllFilesQueryHandler : IRequestHandler<GetAllFilesQuery, PagedResponse<IEnumerable<GetAllFilesViewModel>>>
+    public class GetAllFiles : IRequest<Response<IReadOnlyList<File>>>
     {
-        private readonly IProductRepositoryAsync _productRepository;
-        private readonly IMapper _mapper;
-        public GetAllFilesQueryHandler(IProductRepositoryAsync productRepository, IMapper mapper)
+        public class GetAllFilesQueryHandler : IRequestHandler<GetAllFiles, Response<IReadOnlyList<File>>>
         {
-            _productRepository = productRepository;
-            _mapper = mapper;
-        }
-
-        public async Task<PagedResponse<IEnumerable<GetAllFilesViewModel>>> Handle(GetAllFilesQuery request, CancellationToken cancellationToken)
-        {
-            var validFilter = _mapper.Map<GetAllFilesParameter>(request);
-            var product = await _productRepository.GetPagedReponseAsync(validFilter.PageNumber, validFilter.PageSize);
-            var productViewModel = _mapper.Map<IEnumerable<GetAllFilesViewModel>>(product);
-            return new PagedResponse<IEnumerable<GetAllFilesViewModel>>(productViewModel, validFilter.PageNumber, validFilter.PageSize);
+            private readonly IFileRepositoryAsync _fileRepository;
+            public GetAllFilesQueryHandler(IFileRepositoryAsync fileRepository)
+            {
+                _fileRepository = fileRepository;
+            }
+            public async Task<Response<IReadOnlyList<File>>> Handle(GetAllFiles request, CancellationToken cancellationToken)
+            {
+                var files = await _fileRepository.GetAllFilesAsync();
+                // if (files == null) throw new ApiException($"File Not Found.");
+                return new Response<IReadOnlyList<File>>(files);
+            }
         }
     }
 }

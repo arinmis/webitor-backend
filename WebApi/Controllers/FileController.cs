@@ -29,12 +29,19 @@ namespace WebApi.Controllers.v1
 
         // GET api/<controller>/5
         [HttpGet("{path}")]
-        public async Task<IActionResult> Get(string path)
+        public async Task<IActionResult> GetFile(string path)
         {
             return Ok(await Mediator.Send(new GetFileWithPath
             {
                 path = $"/{path}"
             }));
+        }
+
+
+        [HttpGet("")]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await Mediator.Send(new GetAllFiles()));
         }
 
         // POST api/<controller>
