@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using Core.Wrappers;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.Controllers
@@ -63,7 +64,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CreateFileCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            Response<string> response = await Mediator.Send(command);
+            if (response.Succeeded)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response);
+            }
         }
 
         /// <summary>

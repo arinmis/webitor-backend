@@ -27,6 +27,12 @@ namespace Core.Features.Files.Commands.CreateFile
         public async Task<Response<string>> Handle(CreateFileCommand request, CancellationToken cancellationToken)
         {
             var file = await _fileRepository.CreateFileAsync(request.Path, request.Content);
+
+            if (_fileRepository.GetFileByPathAsync(file.Path).Result != null)
+            {
+                return new Response<string> { Message = $"file with path: {file.Path} already exists." };
+            }
+
             await _fileRepository.AddAsync(file);
             return new Response<string> { Data = file.Path, Message = $"file created with path: {file.Path}" };
         }
