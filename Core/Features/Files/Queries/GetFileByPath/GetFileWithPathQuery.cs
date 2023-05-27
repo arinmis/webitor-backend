@@ -6,16 +6,16 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Features.Files.Queries.GetFileById
+namespace Core.Features.Files.Queries.GetFileWithPath
 {
     public class GetFileWithPath : IRequest<Response<File>>
     {
         // public string userId { get; set; }
         public string path { get; set; }
-        public class GetFileByIdQueryHandler : IRequestHandler<GetFileWithPath, Response<File>>
+        public class GetFileWithPathQueryHandler : IRequestHandler<GetFileWithPath, Response<File>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
-            public GetFileByIdQueryHandler(IFileRepositoryAsync fileRepository)
+            public GetFileWithPathQueryHandler(IFileRepositoryAsync fileRepository)
             {
                 _fileRepository = fileRepository;
             }

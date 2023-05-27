@@ -2,7 +2,7 @@ using Core.Features.Files.Commands.CreateFile;
 using Core.Features.Files.Commands.DeleteFileById;
 using Core.Features.Files.Commands.UpdateFile;
 using Core.Features.Files.Queries.GetAllFiles;
-using Core.Features.Files.Queries.GetFileById;
+using Core.Features.Files.Queries.GetFileWithPath;
 using Core.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
