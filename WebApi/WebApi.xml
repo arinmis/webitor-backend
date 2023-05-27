@@ -4,5 +4,72 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Controllers.v1.FileController.GetFile(System.String)">
+            <summary>
+            Returns specific file created by Authorized user
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET api/file/foo/bar.py 
+                {        
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.v1.FileController.Get">
+            <summary>
+            Returns all of the file created by Authorized user
+            </summary>
+            <returns>The requested item.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.v1.FileController.Post(Core.Features.Files.Commands.CreateFile.CreateFileCommand)">
+            <summary>
+            Creates file with  file path and content for  Authorized user
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/file/foo/bar.py 
+                {        
+                    "path": "/foo/bar.py",
+                    "content": "random_integer = random.randint(1, 100)"
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.v1.FileController.Put(Core.Features.Files.Commands.UpdateFile.UpdateFileCommand)">
+            <summary>
+            Updates file path and content for  Authorized user
+            </summary>
+            <remarks>
+            Update file path:
+            
+                PUT api/file/foo/bar.py 
+                 {
+                    "oldPath": "/foo/bar.py",
+                    "newPath": "/foo/baz.txt",
+                    "content": "lorem ipsum"
+                 }
+            Update file content, use same file path just change content:
+            
+                PUT api/file/foo/bar.py 
+                 {
+                    "oldPath": "/foo/bar.py",
+                    "newPath": "/foo/bar.py",
+                    "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+                 }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.v1.FileController.Delete(System.String)">
+            <summary>
+            Deletes file that has given path for  Authorized user
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE api/file/foo/bar.py 
+                {        
+                }
+            </remarks>
+        </member>
     </members>
 </doc>

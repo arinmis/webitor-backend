@@ -14,12 +14,14 @@ namespace Infrastructure.Contexts
     {
         private readonly IDateTimeService _dateTime;
         private readonly IAuthenticatedUserService _authenticatedUser;
+        public string authenticatedUserId;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDateTimeService dateTime, IAuthenticatedUserService authenticatedUser) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dateTime = dateTime;
             _authenticatedUser = authenticatedUser;
+            authenticatedUserId = authenticatedUser.UserId;
         }
         public DbSet<File> Files { get; set; }
 

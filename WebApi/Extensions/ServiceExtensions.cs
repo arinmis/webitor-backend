@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.IO;
 
 namespace WebApi.Extensions
 {
@@ -50,7 +52,13 @@ namespace WebApi.Extensions
                         }, new List<string>()
                     },
                 });
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
+            services.AddControllers();
+
         }
         public static void AddApiVersioningExtension(this IServiceCollection services)
         {

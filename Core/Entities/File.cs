@@ -8,8 +8,5 @@ namespace Core.Entities
     {
         public string Path { get; set; }
         public string Content { get; set; }
-
-        [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
     }
 }

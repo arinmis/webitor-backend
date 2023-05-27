@@ -1,8 +1,8 @@
 using Core.Features.Files.Commands.CreateFile;
-using Core.Features.Files.Commands.DeleteFileById;
+using Core.Features.Files.Commands.DeleteFileWithPath;
 using Core.Features.Files.Commands.UpdateFile;
 using Core.Features.Files.Queries.GetAllFiles;
-using Core.Features.Files.Queries.GetFileById;
+using Core.Features.Files.Queries.GetFileWithPath;
 using Core.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,50 +14,99 @@ using System.Threading.Tasks;
 
 namespace WebApi.Controllers.v1
 {
+
     [ApiVersion("1.0")]
+    [Authorize]
     public class FileController : BaseApiController
     {
-        // GET: api/<controller>
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResponse<IEnumerable<GetAllFilesViewModel>>))]
-        public async Task<PagedResponse<IEnumerable<GetAllFilesViewModel>>> Get([FromQuery] GetAllFilesParameter filter)
+
+        /// <summary>
+        /// Returns specific file created by Authorized user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET api/file/foo/bar.py 
+        ///     {        
+        ///     }
+        /// </remarks>
+        [HttpGet("{path}")]
+        public async Task<IActionResult> GetFile(string path)
         {
-            return await Mediator.Send(new GetAllFilesQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber, UserId = filter.UserId });
+            return Ok(await Mediator.Send(new GetFileWithPath
+            {
+                path = $"/{path}"
+            }));
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        /// <summary>
+        /// Returns all of the file created by Authorized user
+        /// </summary>
+        /// <returns>The requested item.</returns>
+        [HttpGet("")]
+        public async Task<IActionResult> Get()
         {
-            return Ok(await Mediator.Send(new GetFileByIdQuery { Id = id }));
+            return Ok(await Mediator.Send(new GetAllFiles()));
         }
 
-        // POST api/<controller>
+        /// <summary>
+        /// Creates file with  file path and content for  Authorized user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/file/foo/bar.py 
+        ///     {        
+        ///         "path": "/foo/bar.py",
+        ///         "content": "random_integer = random.randint(1, 100)"
+        ///     }
+        /// </remarks>
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Post(CreateFileCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        [Authorize]
-        public async Task<IActionResult> Put(int id, UpdateFileCommand command)
+        /// <summary>
+        /// Updates file path and content for  Authorized user
+        /// </summary>
+        /// <remarks>
+        /// To update file path, pass existing content and change new path:
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "oldPath": "/foo/bar.py",
+        ///         "newPath": "/foo/baz.txt",
+        ///         "content": "random_integer = random.randint(1, 100)"
+        ///      }
+        /// To update file content, use same file path and just change content:
+        /// 
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "oldPath": "/foo/bar.py",
+        ///         "newPath": "/foo/bar.py",
+        ///         "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+        ///      }
+        /// </remarks>
+        [HttpPut("")]
+        public async Task<IActionResult> Put(UpdateFileCommand command)
         {
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
             return Ok(await Mediator.Send(command));
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<IActionResult> Delete(int id)
+        /// <summary>
+        /// Deletes file that has given path for  Authorized user
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE api/file/foo/bar.py 
+        ///     {        
+        ///     }
+        /// </remarks>
+        [HttpDelete("{path}")]
+        public async Task<IActionResult> Delete(string path)
         {
-            return Ok(await Mediator.Send(new DeleteFileByIdCommand { Id = id }));
+            return Ok(await Mediator.Send(new DeleteFileWithPathCommand { path = $"/{path}" }));
         }
     }
 }

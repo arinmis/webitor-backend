@@ -7,7 +7,8 @@ namespace Core.Interfaces.Repositories
     public interface IFileRepositoryAsync : IGenericRepositoryAsync<File>
     {
 
-        Task<IReadOnlyList<File>> getFilesByUserIdAsync(string userId);
+        Task<File> GetFileByPathAsync(string path);
+        Task<IReadOnlyList<File>> GetAllFilesAsync();
 
     }
 }
