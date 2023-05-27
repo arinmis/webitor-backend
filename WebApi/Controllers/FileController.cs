@@ -1,5 +1,5 @@
 using Core.Features.Files.Commands.CreateFile;
-using Core.Features.Files.Commands.DeleteFileById;
+using Core.Features.Files.Commands.DeleteFileWithPath;
 using Core.Features.Files.Commands.UpdateFile;
 using Core.Features.Files.Queries.GetAllFiles;
 using Core.Features.Files.Queries.GetFileWithPath;
@@ -63,10 +63,10 @@ namespace WebApi.Controllers.v1
         // }
 
         // DELETE api/<controller>/5
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     return Ok(await Mediator.Send(new DeleteFileByIdCommand { Id = id }));
-        // }
+        [HttpDelete("{path}")]
+        public async Task<IActionResult> Delete(string path)
+        {
+            return Ok(await Mediator.Send(new DeleteFileWithPathCommand { path = $"/{path}" }));
+        }
     }
 }
