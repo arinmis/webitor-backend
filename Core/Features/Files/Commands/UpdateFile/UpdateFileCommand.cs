@@ -9,7 +9,8 @@ namespace Core.Features.Files.Commands.UpdateFile
 {
     public class UpdateFileCommand : IRequest<Response<string>>
     {
-        public string path { get; set; }
+        public string oldPath { get; set; }
+        public string newPath { get; set; }
         public string content { get; set; }
         public class UpdateFileCommandHandler : IRequestHandler<UpdateFileCommand, Response<string>>
         {
@@ -20,11 +21,11 @@ namespace Core.Features.Files.Commands.UpdateFile
             }
             public async Task<Response<string>> Handle(UpdateFileCommand command, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetFileByPathAsync(command.path);
+                var file = await _fileRepository.GetFileByPathAsync(command.oldPath);
 
-                if (file == null) throw new EntityNotFoundException("file", command.path);
+                if (file == null) throw new EntityNotFoundException("file", command.newPath);
 
-                file.Path = command.path;
+                file.Path = command.newPath;
                 file.Content = command.content;
                 await _fileRepository.UpdateAsync(file);
                 return new Response<string>(file.Path);

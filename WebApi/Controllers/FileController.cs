@@ -44,8 +44,8 @@ namespace WebApi.Controllers.v1
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{path}")]
-        public async Task<IActionResult> Put(string path, UpdateFileCommand command)
+        [HttpPut("")]
+        public async Task<IActionResult> Put(UpdateFileCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
