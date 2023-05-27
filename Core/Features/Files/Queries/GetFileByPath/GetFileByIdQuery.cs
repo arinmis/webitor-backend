@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace Core.Features.Files.Queries.GetFileById
 {
-    public class GetFileByIdQuery : IRequest<Response<File>>
+    public class GetFileWithPath : IRequest<Response<File>>
     {
-        public int Id { get; set; }
-        public class GetFileByIdQueryHandler : IRequestHandler<GetFileByIdQuery, Response<File>>
+        // public string userId { get; set; }
+        public string path { get; set; }
+        public class GetFileByIdQueryHandler : IRequestHandler<GetFileWithPath, Response<File>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
             public GetFileByIdQueryHandler(IFileRepositoryAsync fileRepository)
             {
                 _fileRepository = fileRepository;
             }
-            public async Task<Response<File>> Handle(GetFileByIdQuery query, CancellationToken cancellationToken)
+            public async Task<Response<File>> Handle(GetFileWithPath query, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetByIdAsync(query.Id);
+                var file = await _fileRepository.GetFileByPathAsync(query.path);
                 if (file == null) throw new ApiException($"File Not Found.");
                 return new Response<File>(file);
             }

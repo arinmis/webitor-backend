@@ -269,3 +269,4 @@ log*.txt
 
 
 *.pem
+.vscode/

@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 
 namespace WebApi.Controllers.v1
 {
+
     [ApiVersion("1.0")]
-    // [Authorize]
+    [Authorize]
     public class FileController : BaseApiController
     {
         // // GET: api/<controller>
@@ -26,12 +27,15 @@ namespace WebApi.Controllers.v1
         //     return await Mediator.Send(new GetAllFilesQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber, UserId = filter.UserId });
         // }
 
-        // // GET api/<controller>/5
-        // [HttpGet("{id}")]
-        // public async Task<IActionResult> Get(int id)
-        // {
-        //     return Ok(await Mediator.Send(new GetFileByIdQuery { Id = id }));
-        // }
+        // GET api/<controller>/5
+        [HttpGet("{path}")]
+        public async Task<IActionResult> Get(string path)
+        {
+            return Ok(await Mediator.Send(new GetFileWithPath
+            {
+                path = $"/{path}"
+            }));
+        }
 
         // POST api/<controller>
         [HttpPost]
@@ -42,7 +46,6 @@ namespace WebApi.Controllers.v1
 
         // // PUT api/<controller>/5
         // [HttpPut("{id}")]
-        // [Authorize]
         // public async Task<IActionResult> Put(int id, UpdateFileCommand command)
         // {
         //     if (id != command.Id)
@@ -54,7 +57,6 @@ namespace WebApi.Controllers.v1
 
         // DELETE api/<controller>/5
         // [HttpDelete("{id}")]
-        // [Authorize]
         // public async Task<IActionResult> Delete(int id)
         // {
         //     return Ok(await Mediator.Send(new DeleteFileByIdCommand { Id = id }));
