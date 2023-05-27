@@ -45,6 +45,8 @@ namespace Infrastructure.Contexts
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<File>()
+            .HasKey(f => new { f.CreatedBy, f.Path });
 
             builder.Entity<ApplicationUser>(entity =>
             {

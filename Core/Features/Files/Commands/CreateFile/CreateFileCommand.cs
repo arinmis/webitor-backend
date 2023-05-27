@@ -26,7 +26,7 @@ namespace Core.Features.Files.Commands.CreateFile
 
         public async Task<Response<string>> Handle(CreateFileCommand request, CancellationToken cancellationToken)
         {
-            var file = _mapper.Map<File>(request);
+            var file = await _fileRepository.CreateFileAsync(request.Path, request.Content);
             await _fileRepository.AddAsync(file);
             return new Response<string> { Data = file.Path, Message = $"file created with path: {file.Path}" };
         }

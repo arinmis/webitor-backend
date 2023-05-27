@@ -10,5 +10,7 @@ namespace Core.Interfaces.Repositories
         Task<File> GetFileByPathAsync(string path);
         Task<IReadOnlyList<File>> GetAllFilesAsync();
 
+        Task<File> CreateFileAsync(string path, string Content);
+
     }
 }
