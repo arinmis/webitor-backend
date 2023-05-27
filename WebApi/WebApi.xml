@@ -41,15 +41,14 @@
             Updates file path and content for  Authorized user
             </summary>
             <remarks>
-            Update file path:
-            
+            To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
                     "oldPath": "/foo/bar.py",
                     "newPath": "/foo/baz.txt",
-                    "content": "lorem ipsum"
+                    "content": "random_integer = random.randint(1, 100)"
                  }
-            Update file content, use same file path just change content:
+            To update file content, use same file path and just change content:
             
                 PUT api/file/foo/bar.py 
                  {
@@ -70,6 +69,11 @@
                 {        
                 }
             </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.v1.RepositoryController.DownloadRepository">
+            <summary>
+            Downloads whole repository as a zip file for authenticated user 
+            </summary>
         </member>
     </members>
 </doc>

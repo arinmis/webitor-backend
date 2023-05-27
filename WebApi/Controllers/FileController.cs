@@ -3,13 +3,12 @@ using Core.Features.Files.Commands.DeleteFileWithPath;
 using Core.Features.Files.Commands.UpdateFile;
 using Core.Features.Files.Queries.GetAllFiles;
 using Core.Features.Files.Queries.GetFileWithPath;
-using Core.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.Controllers.v1
