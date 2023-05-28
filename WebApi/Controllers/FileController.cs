@@ -69,10 +69,7 @@ namespace WebApi.Controllers
             {
                 return Ok(response);
             }
-            else
-            {
-                return BadRequest(response);
-            }
+            return BadRequest(response);
         }
 
         /// <summary>

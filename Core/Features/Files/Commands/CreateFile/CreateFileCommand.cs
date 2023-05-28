@@ -34,7 +34,7 @@ namespace Core.Features.Files.Commands.CreateFile
             }
 
             await _fileRepository.AddAsync(file);
-            return new Response<string> { Data = file.Path, Message = $"file created with path: {file.Path}" };
+            return new Response<string> { Succeeded = true, Data = file.Path, Message = $"file created with path: {file.Path}" };
         }
     }
 }
