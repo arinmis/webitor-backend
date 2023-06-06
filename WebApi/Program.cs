@@ -1,5 +1,6 @@
 using Core;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure;
 using Infrastructure.Models;
 using WebApi.Extensions;
@@ -33,7 +34,6 @@ builder.Services.AddApiVersioningExtension();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
-
 //Build the application
 var app = builder.Build();
 
@@ -51,16 +51,16 @@ app.UseRouting();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
+// app.UseMiddleware<WebSocketsMiddleware>();
 app.UseErrorHandlingMiddleware();
 app.UseHealthChecks("/health");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
 
 /* web socket hubs */
-app.MapHub<FileHub>("/filehub");
+app.MapHub<FileHub>("/hubs/file");
 
 
 app.UseSwagger();
@@ -69,10 +69,7 @@ app.UseSwaggerUI(options =>
     // TODO: fetch version from config file
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
-
-
 });
-
 
 //Initialize Logger
 Log.Logger = new LoggerConfiguration()
