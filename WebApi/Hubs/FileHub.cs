@@ -9,17 +9,29 @@ namespace WebApi.Hubs
     {
         public async Task SendMessage(string user, string message)
         {
-            Console.WriteLine($"{user} says: ${message}");
+            Console.WriteLine($"{user} says: {message}");
             await Clients.All.SendAsync("receiveMessage", user, message);
         }
 
-        /* calls to this method will be sent to all clients except the caller */
+        public async Task UpdateFile(string fileName, string content)
+        {
+            // Update the file here
+
+            // And then send the update to all clients in the group
+            await Clients.Group(fileName).SendAsync("updateClient", content);
+        }
+
+        public async Task JoinFile(string fileName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, fileName);
+        }
+
+        // Remove these methods if you are not using them
         public async Task LockOtherClients()
         {
             await Clients.Others.SendAsync("lockClient");
         }
 
-        /* call this method to update all clients except the caller */
         public async Task UpdateOtherClients()
         {
             await Clients.Others.SendAsync("updateClient");
