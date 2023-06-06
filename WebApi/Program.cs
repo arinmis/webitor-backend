@@ -18,6 +18,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using Microsoft.OpenApi.Models;
+using WebApi.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,7 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddSwaggerExtension();
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
@@ -60,6 +63,10 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
+/* web socket hubs */
+app.MapHub<FileHub>("/filehub");
+
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>
