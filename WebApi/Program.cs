@@ -1,10 +1,6 @@
 using Core;
-using Core.Features.Files.Commands.CreateFile;
 using Core.Interfaces;
-using Core.Interfaces.Repositories;
 using Infrastructure;
-using Infrastructure.Repositories;
-using Infrastructure.Services;
 using Infrastructure.Models;
 using WebApi.Extensions;
 using WebApi.Services;
@@ -17,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using Microsoft.OpenApi.Models;
 using WebApi.Hubs;
 
 
