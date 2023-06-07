@@ -1,10 +1,7 @@
 using Core;
-using Core.Features.Files.Commands.CreateFile;
 using Core.Interfaces;
-using Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure;
-using Infrastructure.Repositories;
-using Infrastructure.Services;
 using Infrastructure.Models;
 using WebApi.Extensions;
 using WebApi.Services;
@@ -17,7 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using Microsoft.OpenApi.Models;
+using WebApi.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,12 +27,17 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddSwaggerExtension();
+builder.Services.AddSignalR(hubOptions =>
+{
+    hubOptions.EnableDetailedErrors = true;
+    // hubOptions.KeepAliveInterval = TimeSpan.FromDays(1);
+    hubOptions.HandshakeTimeout = TimeSpan.FromDays(1); ;
+});
 builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddHealthChecks();
 builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
-
 
 //Build the application
 var app = builder.Build();
@@ -53,13 +56,17 @@ app.UseRouting();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
+// app.UseMiddleware<WebSocketsMiddleware>();
 app.UseErrorHandlingMiddleware();
 app.UseHealthChecks("/health");
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
 });
+
+/* web socket hubs */
+app.MapHub<FileHub>("/hubs/file");
+
 
 app.UseSwagger();
 app.UseSwaggerUI(options =>
@@ -67,10 +74,7 @@ app.UseSwaggerUI(options =>
     // TODO: fetch version from config file
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
-
-
 });
-
 
 //Initialize Logger
 Log.Logger = new LoggerConfiguration()
