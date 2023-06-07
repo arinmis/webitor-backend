@@ -13,28 +13,24 @@ namespace WebApi.Hubs
             await Clients.All.SendAsync("receiveMessage", user, message);
         }
 
-        public async Task UpdateFile(string fileName, string content)
+        public async Task addClientToGroup(string userId)
         {
-            // Update the file here
-
-            // And then send the update to all clients in the group
-            await Clients.Group(fileName).SendAsync("updateClient", content);
+            await Groups.AddToGroupAsync(Context.ConnectionId, userId);
         }
-
-        public async Task JoinFile(string fileName)
+        public async Task removeClientToGroup(string userId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, fileName);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, userId);
         }
 
         // Remove these methods if you are not using them
-        public async Task LockOtherClients()
+        public async Task LockOtherClients(string userId)
         {
-            await Clients.Others.SendAsync("lockClient");
+            await Clients.OthersInGroup(userId).SendAsync("lockClient");
         }
 
-        public async Task UpdateOtherClients()
+        public async Task UpdateOtherClients(string userId)
         {
-            await Clients.Others.SendAsync("updateClient");
+            await Clients.OthersInGroup(userId).SendAsync("updateClient");
         }
     }
 }
