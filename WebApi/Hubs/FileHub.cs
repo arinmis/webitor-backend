@@ -13,17 +13,27 @@ namespace WebApi.Hubs
             await Clients.All.SendAsync("receiveMessage", user, message);
         }
 
-        public async Task UpdateFile(string fileName, string content)
+
+        public async Task UpdateFile(string userID, string fileName, string content)
         {
+            var groupName = $"{userID}_{fileName}";
+
             // Update the file here
 
             // And then send the update to all clients in the group
-            await Clients.Group(fileName).SendAsync("updateClient", content);
+            await Clients.Group(groupName).SendAsync("updateClient", content);
         }
 
-        public async Task JoinFile(string fileName)
+        public async Task JoinFile(string userID, string fileName)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, fileName);
+            var groupName = $"{userID}_{fileName}";
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        }
+
+        public async Task UpdateFileOtherClientsInGroup(string userID, string fileName, string content)
+        {
+            var groupName = $"{userID}_{fileName}";
+            await Clients.OthersInGroup(groupName).SendAsync("updateClient", content);
         }
 
         // Remove these methods if you are not using them
@@ -32,13 +42,23 @@ namespace WebApi.Hubs
             await Clients.Others.SendAsync("lockClient");
         }
 
-        public async Task UpdateOtherClients()
+        public async Task JoinUserGroup(string userID)
         {
-            await Clients.Others.SendAsync("updateClient");
+            await Groups.AddToGroupAsync(Context.ConnectionId, userID);
         }
-        public async Task UpdateOtherClientsInGroup(string fileName, string content)
+
+        public async Task CreateUserFile(string userID, Boolean isCreated)
         {
-            await Clients.OthersInGroup(fileName).SendAsync("updateClient", content);
+            // Create the file here
+
+            // And then notify the user about the new file
+            await Clients.Group(userID).SendAsync("newFileCreated", isCreated);
+        }
+
+        public async Task NotifyOtherUsers(string userID, Boolean isCreated)
+        {
+            // Notify the other users about the new file
+            await Clients.OthersInGroup(userID).SendAsync("newFileCreated", isCreated);
         }
 
     }
