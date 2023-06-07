@@ -27,7 +27,12 @@ builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 builder.Services.AddSwaggerExtension();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(hubOptions =>
+{
+    hubOptions.EnableDetailedErrors = true;
+    // hubOptions.KeepAliveInterval = TimeSpan.FromDays(1);
+    hubOptions.HandshakeTimeout = TimeSpan.FromDays(1); ;
+});
 builder.Services.AddControllers();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddApiVersioningExtension();
