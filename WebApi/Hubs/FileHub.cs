@@ -36,5 +36,10 @@ namespace WebApi.Hubs
         {
             await Clients.Others.SendAsync("updateClient");
         }
+        public async Task UpdateOtherClientsInGroup(string fileName, string content)
+        {
+            await Clients.OthersInGroup(fileName).SendAsync("updateClient", content);
+        }
+
     }
 }
