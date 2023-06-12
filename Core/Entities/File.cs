@@ -8,5 +8,6 @@ namespace Core.Entities
     {
         public string Path { get; set; }
         public string Content { get; set; }
+        public string ProjectName { get; set; }
     }
 }
