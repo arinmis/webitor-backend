@@ -1,7 +1,6 @@
 using AutoMapper;
 using Core.Interfaces.Repositories;
 using Core.Wrappers;
-using Core.Entities;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

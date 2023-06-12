@@ -89,7 +89,7 @@
             </summary>
             <returns>The requested item.</returns>
         </member>
-        <member name="M:WebApi.Controllers.ProjectController.Delete(System.String)">
+        <member name="M:WebApi.Controllers.ProjectController.DeleteProject(System.String)">
             <summary>
             Deletes project created by Authorized user 
             </summary>
@@ -98,6 +98,20 @@
             
                 DELETE api/project/webitor 
                 {        
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.UpdateProject(Core.Features.Projects.Commands.UpdateProjectCommand)">
+            <summary>
+            Updates project created by Authorized user 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT api/project 
+                {        
+                    "oldName": "webitor",
+                    "newName": "webitor-2.0"
                 }
             </remarks>
         </member>

@@ -76,9 +76,27 @@ namespace WebApi.Controllers
         ///     }
         /// </remarks>
         [HttpDelete("{projectName}")]
-        public async Task<IActionResult> Delete(string projectName)
+        public async Task<IActionResult> DeleteProject(string projectName)
         {
             return Ok(await Mediator.Send(new DeleteProjectCommand { projectName = projectName }));
+        }
+
+        /// <summary>
+        /// Updates project created by Authorized user 
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT api/project 
+        ///     {        
+        ///         "oldName": "webitor",
+        ///         "newName": "webitor-2.0"
+        ///     }
+        /// </remarks>
+        [HttpPut]
+        public async Task<IActionResult> UpdateProject(UpdateProjectCommand command)
+        {
+            return Ok(await Mediator.Send(command));
         }
 
     }
