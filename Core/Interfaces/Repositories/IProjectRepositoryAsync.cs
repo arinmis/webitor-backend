@@ -7,5 +7,7 @@ namespace Core.Interfaces.Repositories
     public interface IProjectRepositoryAsync : IGenericRepositoryAsync<Project>
     {
         Task<Project> CreateProjectAsync(string name);
+
+        Task<IReadOnlyList<Project>> GetAllProjectsAsync();
     }
 }

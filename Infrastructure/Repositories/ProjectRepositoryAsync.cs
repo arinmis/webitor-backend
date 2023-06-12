@@ -31,6 +31,13 @@ namespace Infrastructure.Repositories
             return Task.FromResult(project);
         }
 
+        public async Task<IReadOnlyList<Project>> GetAllProjectsAsync()
+        {
+
+            var projects = _project.Where(f => f.CreatedBy == userId).ToList();
+            return await Task.FromResult(new ReadOnlyCollection<Project>(projects));
+        }
+
 
     }
 }

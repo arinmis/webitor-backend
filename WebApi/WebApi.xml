@@ -83,5 +83,11 @@
                 }
             </remarks>
         </member>
+        <member name="M:WebApi.Controllers.ProjectController.Get">
+            <summary>
+            Returns all projects created by Authorized user 
+            </summary>
+            <returns>The requested item.</returns>
+        </member>
     </members>
 </doc>

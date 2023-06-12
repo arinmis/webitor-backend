@@ -2,6 +2,7 @@ using Core.Features.Projects.Commands;
 using Core.Wrappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Core.Features.Projects.Queries;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
@@ -50,6 +51,17 @@ namespace WebApi.Controllers
             }
             return BadRequest(response);
 
+        }
+
+
+        /// <summary>
+        /// Returns all projects created by Authorized user 
+        /// </summary>
+        /// <returns>The requested item.</returns>
+        [HttpGet("")]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await Mediator.Send(new GetAllProjects()));
         }
 
     }
