@@ -74,24 +74,55 @@ namespace WebApi.Controllers
         /// To update file path, pass existing content and change new path:
         ///     PUT api/file/foo/bar.py 
         ///      {
-        ///         "oldPath": "/foo/bar.py",
-        ///         "newPath": "/foo/baz.txt",
-        ///         "content": "random_integer = random.randint(1, 100)"
-        ///      }
-        /// To update file content, use same file path and just change content:
-        /// 
-        ///     PUT api/file/foo/bar.py 
-        ///      {
-        ///         "oldPath": "/foo/bar.py",
-        ///         "newPath": "/foo/bar.py",
-        ///         "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+        ///         "projectName": "webitor",
+        ///         "path": "README.md",
+        ///         "content": "### Webitor 2.0"
         ///      }
         /// </remarks>
         [HttpPut("")]
-        public async Task<IActionResult> Put(UpdateFileCommand command)
+        public async Task<IActionResult> UpdateFileContent(UpdateFileCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
+
+
+        /// <summary>
+        /// Rename file path and content for  Authorized user 
+        /// </summary>
+        /// <remarks>
+        /// To update file path, pass existing content and change new path:
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "projectName": "webitor",
+        ///         "oldPath": "README.md",
+        ///         "newPath": "### Webitor 2.0"
+        ///      }
+        /// </remarks>
+        [HttpPut("rename")]
+        public async Task<IActionResult> RenameFile(RenameFileCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        // /// <summary>
+        // /// Moves all of the files in the given path into the new path for  Authorized user 
+        // /// like linux command mv: $ mv /foo/bar/* /baz/bar/
+        // /// </summary>
+        // /// <remarks>
+        // /// To update file path, pass existing content and change new path:
+        // ///     PUT api/file/foo/bar.py 
+        // ///      {
+        // ///         "projectName": "webitor",
+        // ///         "oldPath": "/foo/bar",
+        // ///         "newPath": "/baz/bar"
+        // ///      }
+        // /// </remarks>
+        // [HttpPut("moveall")]
+        // public async Task<IActionResult> MoveAll(MoveFilesCommand command)
+        // {
+        //     return Ok(await Mediator.Send(command));
+        // }
+
 
         /// <summary>
         /// Deletes file that has given path for  Authorized user

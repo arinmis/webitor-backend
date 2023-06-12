@@ -93,7 +93,7 @@ namespace WebApi.Controllers
         ///         "newName": "webitor-2.0"
         ///     }
         /// </remarks>
-        [HttpPut]
+        [HttpPut("")]
         public async Task<IActionResult> UpdateProject(UpdateProjectCommand command)
         {
             return Ok(await Mediator.Send(command));

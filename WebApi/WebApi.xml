@@ -36,7 +36,7 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Put(Core.Features.Files.Commands.UpdateFileCommand)">
+        <member name="M:WebApi.Controllers.FileController.UpdateFileContent(Core.Features.Files.Commands.UpdateFileCommand)">
             <summary>
             Updates file path and content for  Authorized user
             </summary>
@@ -44,17 +44,23 @@
             To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "oldPath": "/foo/bar.py",
-                    "newPath": "/foo/baz.txt",
-                    "content": "random_integer = random.randint(1, 100)"
+                    "projectName": "webitor",
+                    "path": "README.md",
+                    "content": "### Webitor 2.0"
                  }
-            To update file content, use same file path and just change content:
-            
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.FileController.RenameFile(Core.Features.Files.Commands.RenameFileCommand)">
+            <summary>
+            Rename file path and content for  Authorized user 
+            </summary>
+            <remarks>
+            To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "oldPath": "/foo/bar.py",
-                    "newPath": "/foo/bar.py",
-                    "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+                    "projectName": "webitor",
+                    "oldPath": "README.md",
+                    "newPath": "### Webitor 2.0"
                  }
             </remarks>
         </member>
