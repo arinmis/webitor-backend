@@ -6,7 +6,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Features.Files.Commands.CreateFile
+namespace Core.Features.Files.Commands
 {
     public partial class CreateFileCommand : IRequest<Response<string>>
     {

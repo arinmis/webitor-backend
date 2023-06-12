@@ -4,18 +4,16 @@ using Core.Wrappers;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.IO.Compression;
 using MemoryStream = System.IO.MemoryStream;
 using Stream = System.IO.Stream;
 using StreamWriter = System.IO.StreamWriter;
-using IOException = System.IO.IOException;
 using Core.Entities;
 
-namespace Core.Features.Repository.Commands.DownloadRepository
+namespace Core.Features.Projects.Commands
 {
-    public class DownloadRepositoryCommand : IRequest<Response<byte[]>>
+    public class DownloadProjectCommand : IRequest<Response<byte[]>>
 
     {
 
@@ -41,14 +39,16 @@ namespace Core.Features.Repository.Commands.DownloadRepository
             }
         }
 
-        public class DownloadRepositoryCommandHandler : IRequestHandler<DownloadRepositoryCommand, Response<byte[]>>
+        public class DownloadProjectCommandHandler : IRequestHandler<DownloadProjectCommand, Response<byte[]>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
-            public DownloadRepositoryCommandHandler(IFileRepositoryAsync fileRepository)
+            private readonly IProjectRepositoryAsync _projectRepository;
+            public DownloadProjectCommandHandler(IFileRepositoryAsync fileRepository, IProjectRepositoryAsync projectRepository)
             {
                 _fileRepository = fileRepository;
+                _projectRepository = projectRepository;
             }
-            public async Task<Response<byte[]>> Handle(DownloadRepositoryCommand command, CancellationToken cancellationToken)
+            public async Task<Response<byte[]>> Handle(DownloadProjectCommand command, CancellationToken cancellationToken)
             {
 
                 IReadOnlyList<File> files = await _fileRepository.GetAllFilesAsync();

@@ -5,7 +5,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Features.Files.Commands.DeleteFileWithPath
+namespace Core.Features.Files.Commands
 {
     public class DeleteFileWithPathCommand : IRequest<Response<string>>
     {

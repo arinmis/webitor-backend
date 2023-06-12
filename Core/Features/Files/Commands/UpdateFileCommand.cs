@@ -5,7 +5,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Features.Files.Commands.UpdateFile
+namespace Core.Features.Files.Commands
 {
     public class UpdateFileCommand : IRequest<Response<string>>
     {

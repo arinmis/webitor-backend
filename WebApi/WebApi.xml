@@ -22,7 +22,7 @@
             </summary>
             <returns>The requested item.</returns>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Post(Core.Features.Files.Commands.CreateFile.CreateFileCommand)">
+        <member name="M:WebApi.Controllers.FileController.Post(Core.Features.Files.Commands.CreateFileCommand)">
             <summary>
             Creates file with  file path and content for  Authorized user
             </summary>
@@ -36,7 +36,7 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Put(Core.Features.Files.Commands.UpdateFile.UpdateFileCommand)">
+        <member name="M:WebApi.Controllers.FileController.Put(Core.Features.Files.Commands.UpdateFileCommand)">
             <summary>
             Updates file path and content for  Authorized user
             </summary>
@@ -70,10 +70,18 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.v1.RepositoryController.DownloadRepository">
+        <member name="M:WebApi.Controllers.ProjectController.CreateProject(Core.Features.Projects.Commands.CreateProjectCommand)">
             <summary>
-            Downloads whole repository as a zip file for authenticated user 
+            create new  for authenticated user 
             </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/project 
+                {        
+                    "name": "init_project"",
+                }
+            </remarks>
         </member>
     </members>
 </doc>
