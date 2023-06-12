@@ -21,14 +21,15 @@ namespace Core.Features.Files.Commands
             }
             public async Task<Response<string>> Handle(UpdateFileCommand command, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetFileByPathAsync(command.oldPath);
+                // var file = await _fileRepository.GetFileByPathAsync(command.oldPath);
 
-                if (file == null) throw new EntityNotFoundException("file", command.newPath);
+                // if (file == null) throw new EntityNotFoundException("file", command.newPath);
 
-                file.Path = command.newPath;
-                file.Content = command.content;
-                await _fileRepository.UpdateAsync(file);
-                return new Response<string>(file.Path);
+                // file.Path = command.newPath;
+                // file.Content = command.content;
+                // await _fileRepository.UpdateAsync(file);
+                // return new Response<string>(file.Path);
+                return new Response<string>("working on it");
             }
         }
     }

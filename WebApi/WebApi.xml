@@ -4,7 +4,7 @@
         <name>WebApi</name>
     </assembly>
     <members>
-        <member name="M:WebApi.Controllers.FileController.GetFile(System.String)">
+        <member name="M:WebApi.Controllers.FileController.GetFile(System.String,System.String)">
             <summary>
             Returns specific file created by Authorized user
             </summary>
@@ -16,9 +16,9 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Get">
+        <member name="M:WebApi.Controllers.FileController.Get(System.String)">
             <summary>
-            Returns all of the file created by Authorized user
+            Returns all of the file that belongs to given project created by Authorized user
             </summary>
             <returns>The requested item.</returns>
         </member>
@@ -58,7 +58,7 @@
                  }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Delete(System.String)">
+        <member name="M:WebApi.Controllers.FileController.Delete(System.String,System.String)">
             <summary>
             Deletes file that has given path for  Authorized user
             </summary>
@@ -69,6 +69,11 @@
                 {        
                 }
             </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.DownloadProject(System.String)">
+            <summary>
+            Downloads whole repository as a zip file for authenticated user 
+            </summary>
         </member>
         <member name="M:WebApi.Controllers.ProjectController.CreateProject(Core.Features.Projects.Commands.CreateProjectCommand)">
             <summary>

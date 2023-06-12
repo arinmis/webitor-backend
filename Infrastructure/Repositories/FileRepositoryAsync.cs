@@ -22,22 +22,25 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<File> GetFileByPathAsync(string path)
+        public async Task<File> GetFileAsync(string projectName, string path)
         {
-            File file = _file.Where(f => f.CreatedBy == userId && f.Path == path).FirstOrDefault();
+            File file = _file
+            .Where(f => f.CreatedBy == userId && f.Path == path && f.ProjectName == projectName)
+            .FirstOrDefault();
             return await Task.FromResult(file);
         }
 
-        public async Task<IReadOnlyList<File>> GetAllFilesAsync()
+        public async Task<IReadOnlyList<File>> GetAllFilesAsync(string projectName)
         {
-            var files = _file.Where(f => f.CreatedBy == userId).ToList();
+            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectName == projectName).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));
         }
 
-        public Task<File> CreateFileAsync(string path, string Content)
+        public Task<File> CreateFileAsync(string projectName, string path, string Content)
         {
             File file = new File
             {
+                ProjectName = projectName,
                 Path = path,
                 Content = Content,
                 CreatedBy = userId

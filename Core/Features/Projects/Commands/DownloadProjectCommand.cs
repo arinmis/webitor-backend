@@ -16,6 +16,7 @@ namespace Core.Features.Projects.Commands
     public class DownloadProjectCommand : IRequest<Response<byte[]>>
 
     {
+        public string projectName { get; set; }
 
         private static byte[] CreateZipFile(IReadOnlyList<File> files)
         {
@@ -51,7 +52,7 @@ namespace Core.Features.Projects.Commands
             public async Task<Response<byte[]>> Handle(DownloadProjectCommand command, CancellationToken cancellationToken)
             {
 
-                IReadOnlyList<File> files = await _fileRepository.GetAllFilesAsync();
+                IReadOnlyList<File> files = await _fileRepository.GetAllFilesAsync(command.projectName);
                 byte[] zippedFiles = CreateZipFile(files);
                 return new Response<byte[]>(zippedFiles); // new Response<string> { Data = file.Path, Message = "File deleted" };
             }

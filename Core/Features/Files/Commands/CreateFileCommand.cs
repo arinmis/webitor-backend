@@ -12,6 +12,7 @@ namespace Core.Features.Files.Commands
     {
         public string Path { get; set; }
         public string Content { get; set; }
+        public string ProjectName { get; set; }
     }
 
     public class CreateFileCommandHandler : IRequestHandler<CreateFileCommand, Response<string>>
@@ -26,9 +27,9 @@ namespace Core.Features.Files.Commands
 
         public async Task<Response<string>> Handle(CreateFileCommand request, CancellationToken cancellationToken)
         {
-            var file = await _fileRepository.CreateFileAsync(request.Path, request.Content);
+            var file = await _fileRepository.CreateFileAsync(request.ProjectName, request.Path, request.Content);
 
-            if (_fileRepository.GetFileByPathAsync(file.Path).Result != null)
+            if (_fileRepository.GetFileAsync(request.ProjectName, file.Path).Result != null)
             {
                 return new Response<string> { Message = $"file with path: {file.Path} already exists." };
             }

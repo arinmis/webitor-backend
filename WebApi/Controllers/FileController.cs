@@ -1,6 +1,5 @@
 using Core.Features.Files.Commands;
 using Core.Features.Files.Queries.GetAllFiles;
-using Core.Features.Files.Queries.GetFileWithPath;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -25,23 +24,24 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpGet("{path}")]
-        public async Task<IActionResult> GetFile(string path)
+        [HttpGet("{projectName}/{path}")]
+        public async Task<IActionResult> GetFile(string projectName, string path)
         {
-            return Ok(await Mediator.Send(new GetFileWithPath
+            return Ok(await Mediator.Send(new GetFileCommand
             {
+                projectName = projectName,
                 path = $"/{path}"
             }));
         }
 
         /// <summary>
-        /// Returns all of the file created by Authorized user
+        /// Returns all of the file that belongs to given project created by Authorized user
         /// </summary>
         /// <returns>The requested item.</returns>
-        [HttpGet("")]
-        public async Task<IActionResult> Get()
+        [HttpGet("{projectName}")]
+        public async Task<IActionResult> Get(string projectName)
         {
-            return Ok(await Mediator.Send(new GetAllFiles()));
+            return Ok(await Mediator.Send(new GetAllFiles() { projectName = projectName }));
         }
 
         /// <summary>
@@ -103,10 +103,14 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpDelete("{path}")]
-        public async Task<IActionResult> Delete(string path)
+        [HttpDelete("{projectName}/{path}")]
+        public async Task<IActionResult> Delete(string projectName, string path)
         {
-            return Ok(await Mediator.Send(new DeleteFileWithPathCommand { path = $"/{path}" }));
+            return Ok(await Mediator.Send(new DeleteFileCommand
+            {
+                projectName = projectName,
+                path = $"/{path}"
+            }));
         }
     }
 }

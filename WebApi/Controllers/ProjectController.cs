@@ -16,17 +16,17 @@ namespace WebApi.Controllers
     public class ProjectController : BaseApiController
     {
 
-        // /// <summary>
-        // /// Downloads whole repository as a zip file for authenticated user 
-        // /// </summary>
-        // [HttpGet("download")]
-        // public async Task<IActionResult> DownloadProject(DownloadProjectCommand command)
-        // {
-        //     // return File(await Mediator.Send(command), "application/zip", "fileName.zip"); // Ok(await Mediator.Send(new GetAllFiles()));
-        //     var response = await Mediator.Send(command);
-        //     string now = DateTime.Now.ToString("dd/MM/yyyy-HH:mm");
-        //     return File(response.Data, "application/zip", $"project-{now}.zip");
-        // }
+        /// <summary>
+        /// Downloads whole repository as a zip file for authenticated user 
+        /// </summary>
+        [HttpGet("download/{projectName}")]
+        public async Task<IActionResult> DownloadProject(string projectName)
+        {
+            // return File(await Mediator.Send(command), "application/zip", "fileName.zip"); // Ok(await Mediator.Send(new GetAllFiles()));
+            var response = await Mediator.Send(new DownloadProjectCommand { projectName = projectName });
+            string now = DateTime.Now.ToString("dd/MM/yyyy-HH:mm");
+            return File(response.Data, "application/zip", $"project-{now}.zip");
+        }
 
 
         /// <summary>
