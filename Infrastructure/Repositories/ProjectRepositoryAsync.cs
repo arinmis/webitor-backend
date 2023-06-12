@@ -39,5 +39,12 @@ namespace Infrastructure.Repositories
         }
 
 
+        public async Task<Project> GetProjectWithNameAsync(string projectName)
+        {
+            var project = _project.Where(p => p.Name == projectName).FirstOrDefault();
+            return await Task.FromResult(project);
+        }
+
+
     }
 }

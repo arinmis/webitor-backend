@@ -89,5 +89,17 @@
             </summary>
             <returns>The requested item.</returns>
         </member>
+        <member name="M:WebApi.Controllers.ProjectController.Delete(System.String)">
+            <summary>
+            Deletes project created by Authorized user 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE api/project/webitor 
+                {        
+                }
+            </remarks>
+        </member>
     </members>
 </doc>

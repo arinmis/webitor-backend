@@ -64,5 +64,22 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(new GetAllProjects()));
         }
 
+
+        /// <summary>
+        /// Deletes project created by Authorized user 
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     DELETE api/project/webitor 
+        ///     {        
+        ///     }
+        /// </remarks>
+        [HttpDelete("{projectName}")]
+        public async Task<IActionResult> Delete(string projectName)
+        {
+            return Ok(await Mediator.Send(new DeleteProjectCommand { projectName = projectName }));
+        }
+
     }
 }
