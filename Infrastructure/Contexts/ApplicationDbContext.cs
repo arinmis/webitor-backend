@@ -24,6 +24,8 @@ namespace Infrastructure.Contexts
             authenticatedUserId = authenticatedUser.UserId;
         }
         public DbSet<File> Files { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Collaborator> Collaborators { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
