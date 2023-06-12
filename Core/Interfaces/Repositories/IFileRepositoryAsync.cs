@@ -11,5 +11,7 @@ namespace Core.Interfaces.Repositories
         Task<IReadOnlyList<File>> GetAllFilesAsync(string projectName);
 
         Task<File> CreateFileAsync(string projectName, string path, string Content);
+
+        Task<IReadOnlyList<File>> GetFilesInFolderAsync(string projectName, string folder);
     }
 }

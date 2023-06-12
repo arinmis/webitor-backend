@@ -64,6 +64,21 @@
                  }
             </remarks>
         </member>
+        <member name="M:WebApi.Controllers.FileController.MoveAll(Core.Features.Files.Commands.MoveFilesCommand)">
+            <summary>
+            Moves all of the files in the given path into the new path for  Authorized user 
+            like linux command mv: $ mv /foo/bar/* /baz/bar/
+            </summary>
+            <remarks>
+            To update file path, pass existing content and change new path:
+                PUT api/file/foo/bar.py 
+                 {
+                    "projectName": "webitor",
+                    "oldPath": "/foo/bar",
+                    "newPath": "/baz/bar"
+                 }
+            </remarks>
+        </member>
         <member name="M:WebApi.Controllers.FileController.Delete(System.String,System.String)">
             <summary>
             Deletes file that has given path for  Authorized user

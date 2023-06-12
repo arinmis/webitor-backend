@@ -47,5 +47,14 @@ namespace Infrastructure.Repositories
             };
             return Task.FromResult(file);
         }
+
+
+
+        public async Task<IReadOnlyList<File>> GetFilesInFolderAsync(string projectName, string folder)
+        {
+            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectName == projectName && f.Path.StartsWith(folder)).ToList();
+            return await Task.FromResult(new ReadOnlyCollection<File>(files));
+            // return Task.FromResult(new ReadOnlyCollection<File>(files));
+        }
     }
 }

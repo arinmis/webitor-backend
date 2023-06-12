@@ -104,24 +104,24 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        // /// <summary>
-        // /// Moves all of the files in the given path into the new path for  Authorized user 
-        // /// like linux command mv: $ mv /foo/bar/* /baz/bar/
-        // /// </summary>
-        // /// <remarks>
-        // /// To update file path, pass existing content and change new path:
-        // ///     PUT api/file/foo/bar.py 
-        // ///      {
-        // ///         "projectName": "webitor",
-        // ///         "oldPath": "/foo/bar",
-        // ///         "newPath": "/baz/bar"
-        // ///      }
-        // /// </remarks>
-        // [HttpPut("moveall")]
-        // public async Task<IActionResult> MoveAll(MoveFilesCommand command)
-        // {
-        //     return Ok(await Mediator.Send(command));
-        // }
+        /// <summary>
+        /// Moves all of the files in the given path into the new path for  Authorized user 
+        /// like linux command mv: $ mv /foo/bar/* /baz/bar/
+        /// </summary>
+        /// <remarks>
+        /// To update file path, pass existing content and change new path:
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "projectName": "webitor",
+        ///         "oldPath": "/foo/bar",
+        ///         "newPath": "/baz/bar"
+        ///      }
+        /// </remarks>
+        [HttpPut("moveall")]
+        public async Task<IActionResult> MoveAll(MoveFilesCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
 
 
         /// <summary>
