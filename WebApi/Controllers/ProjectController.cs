@@ -19,11 +19,11 @@ namespace WebApi.Controllers
         /// <summary>
         /// Downloads whole repository as a zip file for authenticated user 
         /// </summary>
-        [HttpGet("download/{projectName}")]
-        public async Task<IActionResult> DownloadProject(string projectName)
+        [HttpGet("download/{projectId}")]
+        public async Task<IActionResult> DownloadProject(int projectId)
         {
             // return File(await Mediator.Send(command), "application/zip", "fileName.zip"); // Ok(await Mediator.Send(new GetAllFiles()));
-            var response = await Mediator.Send(new DownloadProjectCommand { projectName = projectName });
+            var response = await Mediator.Send(new DownloadProjectCommand { projectId = projectId });
             string now = DateTime.Now.ToString("dd/MM/yyyy-HH:mm");
             return File(response.Data, "application/zip", $"project-{now}.zip");
         }
@@ -75,10 +75,10 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpDelete("{projectName}")]
-        public async Task<IActionResult> DeleteProject(string projectName)
+        [HttpDelete("{projectId}")]
+        public async Task<IActionResult> DeleteProject(int projectId)
         {
-            return Ok(await Mediator.Send(new DeleteProjectCommand { projectName = projectName }));
+            return Ok(await Mediator.Send(new DeleteProjectCommand { projectId = projectId }));
         }
 
         /// <summary>

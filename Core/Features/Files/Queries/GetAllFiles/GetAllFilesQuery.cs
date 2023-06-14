@@ -11,7 +11,7 @@ namespace Core.Features.Files.Queries.GetAllFiles
 {
     public class GetAllFiles : IRequest<Response<IReadOnlyList<File>>>
     {
-        public string projectName { get; set; }
+        public int projectId { get; set; }
         public class GetAllFilesQueryHandler : IRequestHandler<GetAllFiles, Response<IReadOnlyList<File>>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
@@ -21,7 +21,7 @@ namespace Core.Features.Files.Queries.GetAllFiles
             }
             public async Task<Response<IReadOnlyList<File>>> Handle(GetAllFiles request, CancellationToken cancellationToken)
             {
-                var files = await _fileRepository.GetAllFilesAsync(request.projectName);
+                var files = await _fileRepository.GetAllFilesAsync(request.projectId);
                 // if (files == null) throw new ApiException($"File Not Found.");
                 return new Response<IReadOnlyList<File>>(files);
             }

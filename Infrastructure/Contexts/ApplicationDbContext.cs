@@ -55,6 +55,7 @@ namespace Infrastructure.Contexts
             .HasIndex(p => new { p.Name, p.CreatedBy })
             .IsUnique();
 
+
             builder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable(name: "User");

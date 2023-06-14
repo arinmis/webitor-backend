@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Core.Features.Collaborator.Commands
 {
-    public partial class AddCollaboratorCommand : IRequest<Response<string>>
+    public partial class AddCollaboratorCommand : IRequest<Response<int>>
     {
-        public string projectId { get; set; }
+        public int projectId { get; set; }
         public string collaboratorUsername { get; set; }
     }
 
-    public class AddCollaboratordCommandHandler : IRequestHandler<AddCollaboratorCommand, Response<string>>
+    public class AddCollaboratordCommandHandler : IRequestHandler<AddCollaboratorCommand, Response<int>>
     {
         private readonly ICollaboratorRepositoryAsync _collaboratorRepository;
         private readonly IMapper _mapper;
@@ -24,10 +24,10 @@ namespace Core.Features.Collaborator.Commands
             _mapper = mapper;
         }
 
-        public async Task<Response<string>> Handle(AddCollaboratorCommand command, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(AddCollaboratorCommand command, CancellationToken cancellationToken)
         {
             var collaborator = await _collaboratorRepository.AddCollaborator(command.projectId, command.collaboratorUsername);
-            return new Response<string> { Succeeded = true, Data = collaborator.ProjectId, Message = $"collaboration is created" };
+            return new Response<int> { Succeeded = true, Data = collaborator.ProjectId, Message = $"collaboration is created" };
         }
     }
 }

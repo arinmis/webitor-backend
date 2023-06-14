@@ -38,9 +38,9 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<Project> GetProjectWithNameAsync(string projectName)
+        public async Task<Project> GetProjectWithIdAsync(int projectId)
         {
-            var project = _project.Where(p => p.Name == projectName).FirstOrDefault();
+            var project = _project.Where(p => p.Id == projectId).FirstOrDefault();
             return await Task.FromResult(project);
         }
 

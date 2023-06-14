@@ -6,7 +6,8 @@ namespace Core.Interfaces.Repositories
 {
     public interface ICollaboratorRepositoryAsync : IGenericRepositoryAsync<Collaborator>
     {
-        Task<Collaborator> AddCollaborator(string projectId, string collaboratorUseranme);
-        // Task<IReadOnlyList<Collaborator>> GetAllCollaborationsAsync(string userName);
+        Task<Collaborator> AddCollaborator(int projectId, string collaboratorUseranme);
+        Task<IReadOnlyList<Collaborator>> GetAllCollaborationsAsync(int projectId);
+
     }
 }

@@ -9,7 +9,7 @@ namespace Core.Features.Files.Commands
 {
     public class RenameFileCommand : IRequest<Response<string>>
     {
-        public string projectName { get; set; }
+        public int projectId { get; set; }
         public string oldPath { get; set; }
         public string newPath { get; set; }
         public class RenameFileCommandHandler : IRequestHandler<RenameFileCommand, Response<string>>
@@ -21,7 +21,7 @@ namespace Core.Features.Files.Commands
             }
             public async Task<Response<string>> Handle(RenameFileCommand command, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetFileAsync(command.projectName, command.oldPath);
+                var file = await _fileRepository.GetFileAsync(command.projectId, command.oldPath);
 
                 if (file == null) throw new EntityNotFoundException("file", command.oldPath);
 

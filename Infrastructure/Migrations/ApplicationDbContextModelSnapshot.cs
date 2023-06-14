@@ -84,10 +84,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("text");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Collaborators");
                 });
@@ -118,8 +120,8 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("text");
 
-                    b.Property<string>("ProjectId")
-                        .HasColumnType("text");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -369,6 +371,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
+            modelBuilder.Entity("Core.Entities.Collaborator", b =>
+                {
+                    b.HasOne("Core.Entities.Project", "Project")
+                        .WithMany("Collaborations")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -418,6 +431,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Project", b =>
+                {
+                    b.Navigation("Collaborations");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.ApplicationUser", b =>

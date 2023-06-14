@@ -9,7 +9,7 @@ namespace Core.Interfaces.Repositories
         Task<Project> CreateProjectAsync(string name);
 
         Task<IReadOnlyList<Project>> GetAllProjectsAsync();
-        Task<Project> GetProjectWithNameAsync(string projectName);
+        Task<Project> GetProjectWithIdAsync(int projectId);
 
     }
 }

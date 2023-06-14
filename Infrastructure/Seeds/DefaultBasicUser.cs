@@ -13,10 +13,10 @@ namespace Infrastructure.Seeds
             //Seed Default User
             var defaultUser = new ApplicationUser
             {
-                UserName = "basicuser",
-                Email = "basicuser@gmail.com",
-                FirstName = "John",
-                LastName = "Doe",
+                UserName = "arinmis",
+                Email = "mustafa_arinmis@outlook.com",
+                FirstName = "mustafa",
+                LastName = "arinmis",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
@@ -25,7 +25,7 @@ namespace Infrastructure.Seeds
                 var user = await userManager.FindByEmailAsync(defaultUser.Email);
                 if (user == null)
                 {
-                    await userManager.CreateAsync(defaultUser, "123Pa$$word!");
+                    await userManager.CreateAsync(defaultUser, "Arinmis123.");
                     await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
                 }
 

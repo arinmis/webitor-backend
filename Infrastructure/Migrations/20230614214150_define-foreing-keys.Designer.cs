@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Infrastructure.WebApi.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230612151153_remove-owner-project")]
-    partial class removeownerproject
+    [Migration("20230614214150_define-foreing-keys")]
+    partial class defineforeingkeys
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,24 +86,23 @@ namespace Infrastructure.WebApi.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProjectName")
-                        .HasColumnType("text");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Collaborators");
                 });
 
             modelBuilder.Entity("Core.Entities.File", b =>
                 {
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Path")
-                        .HasColumnType("text");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
@@ -111,8 +110,8 @@ namespace Infrastructure.WebApi.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp with time zone");
@@ -120,7 +119,16 @@ namespace Infrastructure.WebApi.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.HasKey("CreatedBy", "Path");
+                    b.Property<string>("Path")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy", "Path")
+                        .IsUnique();
 
                     b.ToTable("Files");
                 });
@@ -149,6 +157,9 @@ namespace Infrastructure.WebApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name", "CreatedBy")
+                        .IsUnique();
 
                     b.ToTable("Projects");
                 });
@@ -362,6 +373,17 @@ namespace Infrastructure.WebApi.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
+            modelBuilder.Entity("Core.Entities.Collaborator", b =>
+                {
+                    b.HasOne("Core.Entities.Project", "Project")
+                        .WithMany("Collaborations")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -411,6 +433,11 @@ namespace Infrastructure.WebApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Project", b =>
+                {
+                    b.Navigation("Collaborations");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.ApplicationUser", b =>

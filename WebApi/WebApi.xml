@@ -18,7 +18,16 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.GetFile(System.String,System.String)">
+        <member name="M:WebApi.Controllers.CollaboratorController.GetAllCollaborators(System.Int32)">
+            <summary>
+             
+            </summary>
+            <remarks>
+            Sample request:
+            
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.FileController.GetFile(System.Int32,System.String)">
             <summary>
             Returns specific file created by Authorized user
             </summary>
@@ -30,7 +39,7 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Get(System.String)">
+        <member name="M:WebApi.Controllers.FileController.Get(System.Int32)">
             <summary>
             Returns all of the file that belongs to given project created by Authorized user
             </summary>
@@ -58,7 +67,7 @@
             To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "projectName": "webitor",
+                    "projectId": "webitor",
                     "path": "README.md",
                     "content": "### Webitor 2.0"
                  }
@@ -72,7 +81,7 @@
             To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "projectName": "webitor",
+                    "projectId": "webitor",
                     "oldPath": "README.md",
                     "newPath": "### Webitor 2.0"
                  }
@@ -87,13 +96,13 @@
             To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "projectName": "webitor",
+                    "projectId": "webitor",
                     "oldPath": "/foo/bar",
                     "newPath": "/baz/bar"
                  }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Delete(System.String,System.String)">
+        <member name="M:WebApi.Controllers.FileController.Delete(System.Int32,System.String)">
             <summary>
             Deletes file that has given path for  Authorized user
             </summary>
@@ -105,7 +114,7 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.ProjectController.DownloadProject(System.String)">
+        <member name="M:WebApi.Controllers.ProjectController.DownloadProject(System.Int32)">
             <summary>
             Downloads whole repository as a zip file for authenticated user 
             </summary>
@@ -129,7 +138,7 @@
             </summary>
             <returns>The requested item.</returns>
         </member>
-        <member name="M:WebApi.Controllers.ProjectController.DeleteProject(System.String)">
+        <member name="M:WebApi.Controllers.ProjectController.DeleteProject(System.Int32)">
             <summary>
             Deletes project created by Authorized user 
             </summary>

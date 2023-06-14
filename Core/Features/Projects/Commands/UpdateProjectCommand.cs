@@ -9,8 +9,9 @@ namespace Core.Features.Projects.Commands
 {
     public partial class UpdateProjectCommand : IRequest<Response<string>>
     {
+
+        public int projectId { get; set; }
         public string newName { get; set; }
-        public string oldName { get; set; }
     }
 
     public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand, Response<string>>
@@ -25,7 +26,7 @@ namespace Core.Features.Projects.Commands
 
         public async Task<Response<string>> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var project = await _projectRepository.GetProjectWithNameAsync(request.oldName);
+            var project = await _projectRepository.GetProjectWithIdAsync(request.projectId);
             project.Name = request.newName;
             await _projectRepository.UpdateAsync(project);
             return new Response<string>

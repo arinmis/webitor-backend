@@ -12,7 +12,7 @@ namespace Core.Features.Files.Commands
     {
         // public string userId { get; set; }
         public string path { get; set; }
-        public string projectName { get; set; }
+        public int projectId { get; set; }
         public class GetFileWithPathQueryHandler : IRequestHandler<GetFileCommand, Response<File>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
@@ -22,7 +22,7 @@ namespace Core.Features.Files.Commands
             }
             public async Task<Response<File>> Handle(GetFileCommand query, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetFileAsync(query.projectName, query.path);
+                var file = await _fileRepository.GetFileAsync(query.projectId, query.path);
                 if (file == null) throw new ApiException($"File Not Found.");
                 return new Response<File>(file);
             }

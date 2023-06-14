@@ -24,12 +24,12 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpGet("{projectName}/{path}")]
-        public async Task<IActionResult> GetFile(string projectName, string path)
+        [HttpGet("{projectId}/{path}")]
+        public async Task<IActionResult> GetFile(int projectId, string path)
         {
             return Ok(await Mediator.Send(new GetFileCommand
             {
-                projectName = projectName,
+                projectId = projectId,
                 path = $"/{path}"
             }));
         }
@@ -38,10 +38,10 @@ namespace WebApi.Controllers
         /// Returns all of the file that belongs to given project created by Authorized user
         /// </summary>
         /// <returns>The requested item.</returns>
-        [HttpGet("{projectName}")]
-        public async Task<IActionResult> Get(string projectName)
+        [HttpGet("{projectId}")]
+        public async Task<IActionResult> Get(int projectId)
         {
-            return Ok(await Mediator.Send(new GetAllFiles() { projectName = projectName }));
+            return Ok(await Mediator.Send(new GetAllFiles() { projectId = projectId }));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace WebApi.Controllers
         /// To update file path, pass existing content and change new path:
         ///     PUT api/file/foo/bar.py 
         ///      {
-        ///         "projectName": "webitor",
+        ///         "projectId": "webitor",
         ///         "path": "README.md",
         ///         "content": "### Webitor 2.0"
         ///      }
@@ -93,7 +93,7 @@ namespace WebApi.Controllers
         /// To update file path, pass existing content and change new path:
         ///     PUT api/file/foo/bar.py 
         ///      {
-        ///         "projectName": "webitor",
+        ///         "projectId": "webitor",
         ///         "oldPath": "README.md",
         ///         "newPath": "### Webitor 2.0"
         ///      }
@@ -112,7 +112,7 @@ namespace WebApi.Controllers
         /// To update file path, pass existing content and change new path:
         ///     PUT api/file/foo/bar.py 
         ///      {
-        ///         "projectName": "webitor",
+        ///         "projectId": "webitor",
         ///         "oldPath": "/foo/bar",
         ///         "newPath": "/baz/bar"
         ///      }
@@ -134,8 +134,8 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpDelete("{projectName}/{path}")]
-        public async Task<IActionResult> Delete(string projectId, string path)
+        [HttpDelete("{projectId}/{path}")]
+        public async Task<IActionResult> Delete(int projectId, string path)
         {
             return Ok(await Mediator.Send(new DeleteFileCommand
             {

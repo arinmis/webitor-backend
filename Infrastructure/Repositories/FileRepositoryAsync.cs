@@ -22,7 +22,7 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<File> GetFileAsync(string projectId, string path)
+        public async Task<File> GetFileAsync(int projectId, string path)
         {
             File file = _file
             .Where(f => f.CreatedBy == userId && f.Path == path && f.ProjectId == projectId)
@@ -30,13 +30,13 @@ namespace Infrastructure.Repositories
             return await Task.FromResult(file);
         }
 
-        public async Task<IReadOnlyList<File>> GetAllFilesAsync(string projectId)
+        public async Task<IReadOnlyList<File>> GetAllFilesAsync(int projectId)
         {
             var files = _file.Where(f => f.CreatedBy == userId && f.ProjectId == projectId).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));
         }
 
-        public Task<File> CreateFileAsync(string projectId, string path, string Content)
+        public Task<File> CreateFileAsync(int projectId, string path, string Content)
         {
             File file = new File
             {
@@ -48,9 +48,7 @@ namespace Infrastructure.Repositories
             return Task.FromResult(file);
         }
 
-
-
-        public async Task<IReadOnlyList<File>> GetFilesInFolderAsync(string projectName, string folder)
+        public async Task<IReadOnlyList<File>> GetFilesInFolderAsync(int projectName, string folder)
         {
             var files = _file.Where(f => f.CreatedBy == userId && f.ProjectId == projectName && f.Path.StartsWith(folder)).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));

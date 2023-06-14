@@ -12,7 +12,7 @@ namespace Core.Features.Files.Commands
 {
     public class MoveFilesCommand : IRequest<Response<List<string>>>
     {
-        public string projectName { get; set; }
+        public int projectId { get; set; }
         public string oldFolder { get; set; }
         public string newFolder { get; set; }
         public class MoveFilesCommandHandler : IRequestHandler<MoveFilesCommand, Response<List<string>>>
@@ -25,7 +25,7 @@ namespace Core.Features.Files.Commands
             public async Task<Response<List<string>>> Handle(MoveFilesCommand command, CancellationToken cancellationToken)
             {
                 List<string> filePaths = new List<string>();
-                var files = await _fileRepository.GetFilesInFolderAsync(command.projectName, command.oldFolder);
+                var files = await _fileRepository.GetFilesInFolderAsync(command.projectId, command.oldFolder);
                 foreach (File file in files)
                 {
                     file.Path = file.Path.Replace(command.oldFolder, command.newFolder);

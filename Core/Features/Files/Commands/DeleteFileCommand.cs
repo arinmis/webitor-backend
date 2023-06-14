@@ -10,7 +10,7 @@ namespace Core.Features.Files.Commands
     public class DeleteFileCommand : IRequest<Response<string>>
     {
         public string path { get; set; }
-        public string projectId { get; set; }
+        public int projectId { get; set; }
         public class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand, Response<string>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
