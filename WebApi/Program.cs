@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using WebApi.Hubs;
+using Core.Interfaces.Repositories;
+using Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);

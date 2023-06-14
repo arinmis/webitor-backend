@@ -48,7 +48,7 @@ namespace Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<File>()
-            .HasIndex(f => new { f.ProjectName, f.CreatedBy, f.Path })
+            .HasIndex(f => new { f.CreatedBy, f.Path })
             .IsUnique();
 
             builder.Entity<Project>()

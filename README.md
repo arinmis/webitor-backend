@@ -6,6 +6,7 @@
 To add new migration, run those commands at the root of the repository 
 ```
 dotnet ef migrations add <migration-name> --startup-project WebApi --project Infrastructure --context ApplicationDbContext -o WebApi/Migrations/
+
 ```
 
 Apply migrations

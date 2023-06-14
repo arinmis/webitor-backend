@@ -104,6 +104,7 @@ namespace Infrastructure
             services.AddTransient<IProjectRepositoryAsync, ProjectRepositoryAsync>();
 
             services.AddTransient<IFileRepositoryAsync, FileRepositoryAsync>();
+            services.AddTransient<ICollaboratorRepositoryAsync, CollaboratorRepositoryAsync>();
             #endregion
         }
     }

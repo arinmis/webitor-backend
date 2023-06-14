@@ -10,7 +10,7 @@ namespace Core.Features.Files.Commands
     public class DeleteFileCommand : IRequest<Response<string>>
     {
         public string path { get; set; }
-        public string projectName { get; set; }
+        public string projectId { get; set; }
         public class DeleteFileCommandHandler : IRequestHandler<DeleteFileCommand, Response<string>>
         {
             private readonly IFileRepositoryAsync _fileRepository;
@@ -20,10 +20,10 @@ namespace Core.Features.Files.Commands
             }
             public async Task<Response<string>> Handle(DeleteFileCommand command, CancellationToken cancellationToken)
             {
-                var file = await _fileRepository.GetFileAsync(command.projectName, command.path);
+                var file = await _fileRepository.GetFileAsync(command.projectId, command.path);
                 if (file == null) throw new ApiException($"File Not Found.");
                 await _fileRepository.DeleteAsync(file);
-                return new Response<string> { Data = file.Path, Message = $"{file.Path} in the project {file.ProjectName} deleted" };
+                return new Response<string> { Data = file.Path, Message = $"{file.Path} in the project {file.ProjectId} deleted" };
             }
         }
     }

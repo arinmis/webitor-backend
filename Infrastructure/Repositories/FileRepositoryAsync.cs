@@ -22,25 +22,25 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<File> GetFileAsync(string projectName, string path)
+        public async Task<File> GetFileAsync(string projectId, string path)
         {
             File file = _file
-            .Where(f => f.CreatedBy == userId && f.Path == path && f.ProjectName == projectName)
+            .Where(f => f.CreatedBy == userId && f.Path == path && f.ProjectId == projectId)
             .FirstOrDefault();
             return await Task.FromResult(file);
         }
 
-        public async Task<IReadOnlyList<File>> GetAllFilesAsync(string projectName)
+        public async Task<IReadOnlyList<File>> GetAllFilesAsync(string projectId)
         {
-            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectName == projectName).ToList();
+            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectId == projectId).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));
         }
 
-        public Task<File> CreateFileAsync(string projectName, string path, string Content)
+        public Task<File> CreateFileAsync(string projectId, string path, string Content)
         {
             File file = new File
             {
-                ProjectName = projectName,
+                ProjectId = projectId,
                 Path = path,
                 Content = Content,
                 CreatedBy = userId
@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IReadOnlyList<File>> GetFilesInFolderAsync(string projectName, string folder)
         {
-            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectName == projectName && f.Path.StartsWith(folder)).ToList();
+            var files = _file.Where(f => f.CreatedBy == userId && f.ProjectId == projectName && f.Path.StartsWith(folder)).ToList();
             return await Task.FromResult(new ReadOnlyCollection<File>(files));
             // return Task.FromResult(new ReadOnlyCollection<File>(files));
         }

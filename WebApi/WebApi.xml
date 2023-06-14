@@ -4,6 +4,20 @@
         <name>WebApi</name>
     </assembly>
     <members>
+        <member name="M:WebApi.Controllers.CollaboratorController.AddCollaborator(Core.Features.Collaborator.Commands.AddCollaboratorCommand)">
+            <summary>
+             
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/project 
+                {        
+                    "projectName": "webitor"",
+                    "collaboratorUserName": "Arinmis123."":   
+                }
+            </remarks>
+        </member>
         <member name="M:WebApi.Controllers.FileController.GetFile(System.String,System.String)">
             <summary>
             Returns specific file created by Authorized user

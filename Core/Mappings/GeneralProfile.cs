@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using Core.Entities;
-using Core.Features.Files.Commands;
-using Core.Features.Files.Queries.GetAllFiles;
 
 namespace Core.Mappings
 {

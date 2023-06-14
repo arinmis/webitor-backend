@@ -135,11 +135,11 @@ namespace WebApi.Controllers
         ///     }
         /// </remarks>
         [HttpDelete("{projectName}/{path}")]
-        public async Task<IActionResult> Delete(string projectName, string path)
+        public async Task<IActionResult> Delete(string projectId, string path)
         {
             return Ok(await Mediator.Send(new DeleteFileCommand
             {
-                projectName = projectName,
+                projectId = projectId,
                 path = $"/{path}"
             }));
         }
