@@ -8,6 +8,9 @@ namespace Core.Entities
     {
         public string Path { get; set; }
         public string Content { get; set; }
+
+        [ForeignKey("Project")]
         public int ProjectId { get; set; }
+        public Project Project { get; set; }
     }
 }

@@ -55,6 +55,17 @@ namespace Infrastructure.Contexts
             .HasIndex(p => new { p.Name, p.CreatedBy })
             .IsUnique();
 
+            builder.Entity<Collaborator>()
+               .HasOne(c => c.Project)
+               .WithMany(p => p.Collaborators)
+               .HasForeignKey(c => c.ProjectId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<File>()
+               .HasOne(f => f.Project)
+               .WithMany(p => p.Files)
+               .HasForeignKey(c => c.ProjectId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ApplicationUser>(entity =>
             {
