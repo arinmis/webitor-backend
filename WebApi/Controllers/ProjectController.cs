@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         public async Task<IActionResult> CreateProject(CreateProjectCommand command)
         {
 
-            Response<string> response = await Mediator.Send(command);
+            Response<int> response = await Mediator.Send(command);
             if (response.Succeeded)
             {
                 return Ok(response);

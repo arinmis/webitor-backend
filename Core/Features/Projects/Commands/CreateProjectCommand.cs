@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Features.Projects.Commands
 {
-    public partial class CreateProjectCommand : IRequest<Response<string>>
+    public partial class CreateProjectCommand : IRequest<Response<int>>
     {
         public string name { get; set; }
     }
 
-    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Response<string>>
+    public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Response<int>>
     {
         private readonly IProjectRepositoryAsync _projectRepository;
         private readonly IMapper _mapper;
@@ -22,14 +22,14 @@ namespace Core.Features.Projects.Commands
             _mapper = mapper;
         }
 
-        public async Task<Response<string>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Response<int>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             var project = await _projectRepository.CreateProjectAsync(request.name);
             await _projectRepository.AddAsync(project);
-            return new Response<string>
+            return new Response<int>
             {
                 Succeeded = true,
-                Data = project.Name,
+                Data = project.Id,
                 Message = $"project created with name: {project.Name}"
             };
         }
