@@ -30,3 +30,23 @@ curl -X 'POST' \
   "confirmPassword": "Foo$ar1"
 }'
 ```
+
+### Seed users info
+
+```
+{
+    UserName: "selamYusufBen",
+    Email: "yusuf@gmail.com",
+    Password: "Yusuf123."
+}
+{
+    UserName: "arinmis",
+    Email: "mustafa_arinmis@outlook.com",
+    Password: "Arinmis123."
+}
+{
+    UserName: "testtest",
+    Email: "test@test.com",
+    Password": Testtest1."
+}
+```
