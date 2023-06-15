@@ -33,8 +33,16 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Project>> GetAllProjectsAsync()
         {
 
+            var collaboratedProjects = _project
+                .Where(p => p.Collaborators.Any(c => c.CollaboratorId == userId))
+                .ToList();
+
             var projects = _project.Where(f => f.CreatedBy == userId).ToList();
-            return await Task.FromResult(new ReadOnlyCollection<Project>(projects));
+
+            var mergedProjects = collaboratedProjects.Concat(projects).ToList();
+
+            return await Task.FromResult(new ReadOnlyCollection<Project>(mergedProjects));
+
         }
 
 
