@@ -1,6 +1,5 @@
 using Core;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure;
 using Infrastructure.Models;
 using WebApi.Extensions;
@@ -15,8 +14,6 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
 using WebApi.Hubs;
-using Core.Interfaces.Repositories;
-using Infrastructure.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);

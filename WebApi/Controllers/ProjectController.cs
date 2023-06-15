@@ -43,7 +43,6 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProject(CreateProjectCommand command)
         {
-
             Response<int> response = await Mediator.Send(command);
             if (response.Succeeded)
             {
