@@ -4,7 +4,30 @@
         <name>WebApi</name>
     </assembly>
     <members>
-        <member name="M:WebApi.Controllers.FileController.GetFile(System.String)">
+        <member name="M:WebApi.Controllers.CollaboratorController.AddCollaborator(Core.Features.Collaborator.Commands.AddCollaboratorCommand)">
+            <summary>
+             
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/project 
+                {        
+                    "projectName": "webitor"",
+                    "collaboratorUserName": "Arinmis123."":   
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.CollaboratorController.GetAllCollaborators(System.Int32)">
+            <summary>
+             
+            </summary>
+            <remarks>
+            Sample request:
+            
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.FileController.GetFile(System.Int32,System.String)">
             <summary>
             Returns specific file created by Authorized user
             </summary>
@@ -16,13 +39,13 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Get">
+        <member name="M:WebApi.Controllers.FileController.Get(System.Int32)">
             <summary>
-            Returns all of the file created by Authorized user
+            Returns all of the file that belongs to given project created by Authorized user
             </summary>
             <returns>The requested item.</returns>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Post(Core.Features.Files.Commands.CreateFile.CreateFileCommand)">
+        <member name="M:WebApi.Controllers.FileController.Post(Core.Features.Files.Commands.CreateFileCommand)">
             <summary>
             Creates file with  file path and content for  Authorized user
             </summary>
@@ -36,7 +59,7 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Put(Core.Features.Files.Commands.UpdateFile.UpdateFileCommand)">
+        <member name="M:WebApi.Controllers.FileController.UpdateFileContent(Core.Features.Files.Commands.UpdateFileCommand)">
             <summary>
             Updates file path and content for  Authorized user
             </summary>
@@ -44,21 +67,42 @@
             To update file path, pass existing content and change new path:
                 PUT api/file/foo/bar.py 
                  {
-                    "oldPath": "/foo/bar.py",
-                    "newPath": "/foo/baz.txt",
-                    "content": "random_integer = random.randint(1, 100)"
-                 }
-            To update file content, use same file path and just change content:
-            
-                PUT api/file/foo/bar.py 
-                 {
-                    "oldPath": "/foo/bar.py",
-                    "newPath": "/foo/bar.py",
-                    "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+                    "projectId": "webitor",
+                    "path": "README.md",
+                    "content": "### Webitor 2.0"
                  }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.FileController.Delete(System.String)">
+        <member name="M:WebApi.Controllers.FileController.RenameFile(Core.Features.Files.Commands.RenameFileCommand)">
+            <summary>
+            Rename file path and content for  Authorized user 
+            </summary>
+            <remarks>
+            To update file path, pass existing content and change new path:
+                PUT api/file/foo/bar.py 
+                 {
+                    "projectId": "webitor",
+                    "oldPath": "README.md",
+                    "newPath": "### Webitor 2.0"
+                 }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.FileController.MoveAll(Core.Features.Files.Commands.MoveFilesCommand)">
+            <summary>
+            Moves all of the files in the given path into the new path for  Authorized user 
+            like linux command mv: $ mv /foo/bar/* /baz/bar/
+            </summary>
+            <remarks>
+            To update file path, pass existing content and change new path:
+                PUT api/file/foo/bar.py 
+                 {
+                    "projectId": "webitor",
+                    "oldPath": "/foo/bar",
+                    "newPath": "/baz/bar"
+                 }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.FileController.Delete(System.Int32,System.String)">
             <summary>
             Deletes file that has given path for  Authorized user
             </summary>
@@ -70,10 +114,55 @@
                 }
             </remarks>
         </member>
-        <member name="M:WebApi.Controllers.v1.RepositoryController.DownloadRepository">
+        <member name="M:WebApi.Controllers.ProjectController.DownloadProject(System.Int32)">
             <summary>
             Downloads whole repository as a zip file for authenticated user 
             </summary>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.CreateProject(Core.Features.Projects.Commands.CreateProjectCommand)">
+            <summary>
+            create new  for authenticated user 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/project 
+                {        
+                    "name": "init_project"",
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.Get">
+            <summary>
+            Returns all projects created by Authorized user 
+            </summary>
+            <returns>The requested item.</returns>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.DeleteProject(System.Int32)">
+            <summary>
+            Deletes project created by Authorized user 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE api/project/webitor 
+                {        
+                }
+            </remarks>
+        </member>
+        <member name="M:WebApi.Controllers.ProjectController.UpdateProject(Core.Features.Projects.Commands.UpdateProjectCommand)">
+            <summary>
+            Updates project created by Authorized user 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT api/project 
+                {        
+                    "oldName": "webitor",
+                    "newName": "webitor-2.0"
+                }
+            </remarks>
         </member>
     </members>
 </doc>

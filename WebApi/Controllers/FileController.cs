@@ -1,14 +1,8 @@
-using Core.Features.Files.Commands.CreateFile;
-using Core.Features.Files.Commands.DeleteFileWithPath;
-using Core.Features.Files.Commands.UpdateFile;
+using Core.Features.Files.Commands;
 using Core.Features.Files.Queries.GetAllFiles;
-using Core.Features.Files.Queries.GetFileWithPath;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 using Core.Wrappers;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,23 +24,24 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpGet("{path}")]
-        public async Task<IActionResult> GetFile(string path)
+        [HttpGet("{projectId}/{path}")]
+        public async Task<IActionResult> GetFile(int projectId, string path)
         {
-            return Ok(await Mediator.Send(new GetFileWithPath
+            return Ok(await Mediator.Send(new GetFileCommand
             {
+                projectId = projectId,
                 path = $"/{path}"
             }));
         }
 
         /// <summary>
-        /// Returns all of the file created by Authorized user
+        /// Returns all of the file that belongs to given project created by Authorized user
         /// </summary>
         /// <returns>The requested item.</returns>
-        [HttpGet("")]
-        public async Task<IActionResult> Get()
+        [HttpGet("{projectId}")]
+        public async Task<IActionResult> Get(int projectId)
         {
-            return Ok(await Mediator.Send(new GetAllFiles()));
+            return Ok(await Mediator.Send(new GetAllFiles() { projectId = projectId }));
         }
 
         /// <summary>
@@ -79,24 +74,55 @@ namespace WebApi.Controllers
         /// To update file path, pass existing content and change new path:
         ///     PUT api/file/foo/bar.py 
         ///      {
-        ///         "oldPath": "/foo/bar.py",
-        ///         "newPath": "/foo/baz.txt",
-        ///         "content": "random_integer = random.randint(1, 100)"
-        ///      }
-        /// To update file content, use same file path and just change content:
-        /// 
-        ///     PUT api/file/foo/bar.py 
-        ///      {
-        ///         "oldPath": "/foo/bar.py",
-        ///         "newPath": "/foo/bar.py",
-        ///         "content": "random_integer = [randint(0, 9) for p in range(0, 10)]"
+        ///         "projectId": "webitor",
+        ///         "path": "README.md",
+        ///         "content": "### Webitor 2.0"
         ///      }
         /// </remarks>
         [HttpPut("")]
-        public async Task<IActionResult> Put(UpdateFileCommand command)
+        public async Task<IActionResult> UpdateFileContent(UpdateFileCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
+
+
+        /// <summary>
+        /// Rename file path and content for  Authorized user 
+        /// </summary>
+        /// <remarks>
+        /// To update file path, pass existing content and change new path:
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "projectId": "webitor",
+        ///         "oldPath": "README.md",
+        ///         "newPath": "### Webitor 2.0"
+        ///      }
+        /// </remarks>
+        [HttpPut("rename")]
+        public async Task<IActionResult> RenameFile(RenameFileCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        /// <summary>
+        /// Moves all of the files in the given path into the new path for  Authorized user 
+        /// like linux command mv: $ mv /foo/bar/* /baz/bar/
+        /// </summary>
+        /// <remarks>
+        /// To update file path, pass existing content and change new path:
+        ///     PUT api/file/foo/bar.py 
+        ///      {
+        ///         "projectId": "webitor",
+        ///         "oldPath": "/foo/bar",
+        ///         "newPath": "/baz/bar"
+        ///      }
+        /// </remarks>
+        [HttpPut("moveall")]
+        public async Task<IActionResult> MoveAll(MoveFilesCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
 
         /// <summary>
         /// Deletes file that has given path for  Authorized user
@@ -108,10 +134,14 @@ namespace WebApi.Controllers
         ///     {        
         ///     }
         /// </remarks>
-        [HttpDelete("{path}")]
-        public async Task<IActionResult> Delete(string path)
+        [HttpDelete("{projectId}/{path}")]
+        public async Task<IActionResult> Delete(int projectId, string path)
         {
-            return Ok(await Mediator.Send(new DeleteFileWithPathCommand { path = $"/{path}" }));
+            return Ok(await Mediator.Send(new DeleteFileCommand
+            {
+                projectId = projectId,
+                path = $"/{path}"
+            }));
         }
     }
 }

@@ -1,20 +1,21 @@
 # Webitor backend with .net 6
 
+## Migrations
 
-## Migrations 
+To add new migration, run those commands at the root of the repository
 
-To add new migration, run those commands at the root of the repository 
 ```
-dotnet ef migrations add <migration-name> --startup-project WebApi --project Infrastructure --context ApplicationDbContext -o WebApi/Migrations/
+dotnet ef migrations add <migration-name> --startup-project WebApi --project Infrastructure --context ApplicationDbContext -o Migrations/
 ```
 
 Apply migrations
+
 ```
 dotnet ef   database update --project Infrastructure --startup-project WebApi --context ApplicationDbContext
 ```
 
-
 ### Example Request: Singup
+
 ```
 curl -X 'POST' \
   'http://localhost:8080/api/account/signup' \

@@ -1,6 +1,5 @@
 using Core;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Infrastructure;
 using Infrastructure.Models;
 using WebApi.Extensions;
@@ -65,7 +64,7 @@ app.UseEndpoints(endpoints =>
 });
 
 /* web socket hubs */
-app.MapHub<FileHub>("/hubs/file");
+app.MapHub<ProjectHub>("/hubs/project");
 
 
 app.UseSwagger();

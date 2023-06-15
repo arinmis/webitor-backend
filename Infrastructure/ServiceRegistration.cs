@@ -101,9 +101,10 @@ namespace Infrastructure
             #region Repositories
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
 
-            services.AddTransient<IProductRepositoryAsync, ProductRepositoryAsync>();
+            services.AddTransient<IProjectRepositoryAsync, ProjectRepositoryAsync>();
 
             services.AddTransient<IFileRepositoryAsync, FileRepositoryAsync>();
+            services.AddTransient<ICollaboratorRepositoryAsync, CollaboratorRepositoryAsync>();
             #endregion
         }
     }

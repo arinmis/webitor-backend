@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230614214150_define-foreing-keys")]
+    partial class defineforeingkeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,8 +126,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("CreatedBy", "Path")
                         .IsUnique();
@@ -376,18 +376,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Collaborator", b =>
                 {
                     b.HasOne("Core.Entities.Project", "Project")
-                        .WithMany("Collaborators")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Core.Entities.File", b =>
-                {
-                    b.HasOne("Core.Entities.Project", "Project")
-                        .WithMany("Files")
+                        .WithMany("Collaborations")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -448,9 +437,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Project", b =>
                 {
-                    b.Navigation("Collaborators");
-
-                    b.Navigation("Files");
+                    b.Navigation("Collaborations");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.ApplicationUser", b =>

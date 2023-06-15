@@ -24,6 +24,8 @@ namespace Infrastructure.Contexts
             authenticatedUserId = authenticatedUser.UserId;
         }
         public DbSet<File> Files { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Collaborator> Collaborators { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -46,7 +48,24 @@ namespace Infrastructure.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<File>()
-            .HasKey(f => new { f.CreatedBy, f.Path });
+            .HasIndex(f => new { f.CreatedBy, f.Path })
+            .IsUnique();
+
+            builder.Entity<Project>()
+            .HasIndex(p => new { p.Name, p.CreatedBy })
+            .IsUnique();
+
+            builder.Entity<Collaborator>()
+               .HasOne(c => c.Project)
+               .WithMany(p => p.Collaborators)
+               .HasForeignKey(c => c.ProjectId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<File>()
+               .HasOne(f => f.Project)
+               .WithMany(p => p.Files)
+               .HasForeignKey(c => c.ProjectId)
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ApplicationUser>(entity =>
             {
