@@ -64,7 +64,7 @@ app.UseEndpoints(endpoints =>
 });
 
 /* web socket hubs */
-app.MapHub<FileHub>("/hubs/file");
+app.MapHub<ProjectHub>("/hubs/project");
 
 
 app.UseSwagger();

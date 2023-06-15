@@ -5,60 +5,30 @@ using System;
 namespace WebApi.Hubs
 {
     // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class FileHub : Hub
+    public class ProjectHub : Hub
     {
-        public async Task SendMessage(string user, string message)
+
+        /* Join and leave project groups */
+        public async Task JoinProject(int projectId)
         {
-            Console.WriteLine($"{user} says: {message}");
-            await Clients.All.SendAsync("receiveMessage", user, message);
+            await Groups.AddToGroupAsync(Context.ConnectionId, projectId.ToString());
         }
 
-
-        public async Task UpdateFile(string userID, string fileName, string content)
+        public async Task LeaveProject(int projectId)
         {
-            var groupName = $"{userID}_{fileName}";
-
-            // Update the file here
-
-            // And then send the update to all clients in the group
-            await Clients.Group(groupName).SendAsync("updateClient", content);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, projectId.ToString());
         }
 
-        public async Task JoinFile(string userID, string fileName)
+        /* File CRUD operations */
+        public async Task PushFileUpdate(int projectId, string filename, string content)
         {
-            var groupName = $"{userID}_{fileName}";
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            Console.WriteLine($"Pushing file update{filename} to project {projectId}");
+            await Clients.OthersInGroup(projectId.ToString()).SendAsync("updateFile", filename, content);
         }
 
-        public async Task UpdateFileOtherClientsInGroup(string userID, string fileName, string content)
+        public async Task PushFileCreation(int projectId, string filename)
         {
-            var groupName = $"{userID}_{fileName}";
-            await Clients.OthersInGroup(groupName).SendAsync("updateClient", content);
-        }
-
-        // Remove these methods if you are not using them
-        public async Task LockOtherClients()
-        {
-            await Clients.Others.SendAsync("lockClient");
-        }
-
-        public async Task JoinUserGroup(string userID)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, userID);
-        }
-
-        public async Task CreateUserFile(string userID, Boolean isCreated)
-        {
-            // Create the file here
-
-            // And then notify the user about the new file
-            await Clients.Group(userID).SendAsync("newFileCreated", isCreated);
-        }
-
-        public async Task NotifyOtherUsers(string userID, Boolean isCreated)
-        {
-            // Notify the other users about the new file
-            await Clients.OthersInGroup(userID).SendAsync("newFileCreated", isCreated);
+            await Clients.OthersInGroup(projectId.ToString()).SendAsync("createFile", filename);
         }
 
     }
