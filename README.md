@@ -35,18 +35,18 @@ curl -X 'POST' \
 
 ```
 {
-    UserName: "selamYusufBen",
-    Email: "yusuf@gmail.com",
-    Password: "Yusuf123."
+    userName: "selamYusufBen",
+    email: "yusuf@gmail.com",
+    password: "Yusuf123."
 }
 {
-    UserName: "arinmis",
-    Email: "mustafa_arinmis@outlook.com",
-    Password: "Arinmis123."
+    userName: "arinmis",
+    email: "mustafa_arinmis@outlook.com",
+    password: "Arinmis123."
 }
 {
-    UserName: "testtest",
-    Email: "test@test.com",
-    Password": Testtest1."
+    userName: "testtest",
+    email: "test@test.com",
+    password": "Testtest1."
 }
 ```
